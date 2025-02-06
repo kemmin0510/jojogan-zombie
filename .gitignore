@@ -111,5 +111,5 @@ ENV/
 # Model files
 models/*
 
-# Nhưng vẫn giữ thư mục models (Git không theo dõi thư mục trống)
+# Keep "models" folder
 !models/.gitkeep
