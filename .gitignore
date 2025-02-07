@@ -109,7 +109,10 @@ ENV/
 .idea/
 
 # Model files
-models/*
+!models/inversion_codes/zombie.pt
+models/*.pt
+# models/*.dat
+!models/inversion_codes/zombie.pt
 
 # Keep "models" folder
-!models/.gitkeep
+# !models/.gitkeep
