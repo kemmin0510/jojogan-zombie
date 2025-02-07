@@ -39,16 +39,16 @@ class pSp(nn.Module):
 
     def load_weights(self):
         if self.opts.checkpoint_path is not None:
-            print('Loading e4e over the pSp framework from checkpoint: {}'.format(self.opts.checkpoint_path))
+            # print('Loading e4e over the pSp framework from checkpoint: {}'.format(self.opts.checkpoint_path))
             ckpt = torch.load(self.opts.checkpoint_path, map_location='cpu')
             self.encoder.load_state_dict(get_keys(ckpt, 'encoder'), strict=True)
             self.decoder.load_state_dict(get_keys(ckpt, 'decoder'), strict=True)
             self.__load_latent_avg(ckpt)
         else:
-            print('Loading encoders weights from irse50!')
+            # print('Loading encoders weights from irse50!')
             encoder_ckpt = torch.load(model_paths['ir_se50'])
             self.encoder.load_state_dict(encoder_ckpt, strict=False)
-            print('Loading decoder weights from pretrained!')
+            # print('Loading decoder weights from pretrained!')
             ckpt = torch.load(self.opts.stylegan_weights)
             self.decoder.load_state_dict(ckpt['g_ema'], strict=False)
             self.__load_latent_avg(ckpt, repeat=self.encoder.style_count)

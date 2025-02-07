@@ -129,6 +129,7 @@ def align_face(filepath, output_size=1024, transform_size=4096, enable_padding=T
     :param filepath: str
     :return: PIL Image
     """
+    print(os.getcwd())
     ensure_checkpoint_exists("../models/dlibshape_predictor_68_face_landmarks.dat")
     predictor = dlib.shape_predictor("../models/dlibshape_predictor_68_face_landmarks.dat")
     lm = get_landmark(filepath, predictor)
