@@ -8,4 +8,4 @@ if docker images | awk '{print $1}' | grep -w test; then
 fi
 
 docker build -t test .
-docker run -p ${PORT}:8000 -v ./app:/app/app test
+docker run -p ${PORT}:8000 test
