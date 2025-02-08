@@ -4,7 +4,7 @@
 PORT=$1
 
 if docker images | awk '{print $1}' | grep -w test; then
-    docker rmi test
+    docker rmi -f test
 fi
 
 docker build -t test .
