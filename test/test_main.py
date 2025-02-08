@@ -2,7 +2,8 @@ import requests
 import os
 
 API_PORT = os.getenv('API_PORT', 8086)
-API_URL = f'http://host.docker.internal:{API_PORT}/uploadfile/'
+
+API_URL = f'http://localhost:{API_PORT}/uploadfile/'
 
 def test_post():
     # Open image file

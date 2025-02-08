@@ -37,13 +37,12 @@ pipeline {
                 docker {
                     image 'python:3.9.21-slim'
                     args '-v /root/.cache/pip:/root/.cache/pip'
+                    args '--network host -v /root/.cache/pip:/root/.cache/pip'
                 }
             }
 
             steps {
                 echo 'Testing model correctness..'
-                sh 'ls'
-                sh 'pwd'
                 sh 'pip install pytest requests'
                 sh 'pytest'
                 sh 'docker rm -f test'
