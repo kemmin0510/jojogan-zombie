@@ -40,5 +40,9 @@ EXPOSE 8000
 
 RUN pwd
 
+RUN ls
+
+RUN ls /app
+
 # Chạy ứng dụng FastAPI bằng Uvicorn
 CMD ["python", "app/main.py"]
