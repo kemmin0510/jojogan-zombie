@@ -22,13 +22,13 @@ pipeline {
     stages {
 
         // Setup stage
-        // stage('Setup') {
-        //     steps {
-        //         echo 'Setting up environment..'
-        //         sh 'chmod +x ./bin/build_deploy_local.sh'
-        //         sh './bin/build_deploy_local.sh 8086'
-        //     }
-        // }
+        stage('Setup') {
+            steps {
+                echo 'Setting up environment..'
+                sh 'chmod +x ./bin/build_deploy_local.sh'
+                sh './bin/build_deploy_local.sh 8086'
+            }
+        }
 
         // Test stage. Pytest is used to test the unit tests
         stage('Test') {
@@ -42,7 +42,7 @@ pipeline {
 
             steps {
                 echo 'Testing model correctness..'
-                sh 'pip install pytest'
+                sh 'pip install pytest requests'
                 sh 'pytest'
                 sh 'docker rm -f test'
             }
