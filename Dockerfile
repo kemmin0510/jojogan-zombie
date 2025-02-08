@@ -16,7 +16,6 @@ RUN apt-get update && apt-get install -y \
 
 # Copy and install dependencies
 COPY requirements.txt /app
-COPY pyproject.toml /app
 
 RUN pip install --upgrade pip
 RUN pip install --no-cache -r requirements.txt
