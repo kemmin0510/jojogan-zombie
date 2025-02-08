@@ -21,19 +21,11 @@ pipeline {
 
     stages {
 
-        // Checkout stage
-        // stage('Checkout') {
-        //     steps {
-        //         git branch: github_branch, url: github_url
-        //     }
-        // }
-
         // Setup stage
-
         stage('Setup') {
             steps {
                 // echo 'Setting up environment..'
-                // sh './bin/build_deploy_local.sh 8086'
+                sh './bin/build_deploy_local.sh 8086'
                 sh 'ls'
             }
         }
