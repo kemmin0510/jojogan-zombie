@@ -48,4 +48,4 @@ RUN readlink -f app/main.py
 
 RUN chmod +x app/main.py
 
-ENTRYPOINT ["readlink", "app/main.py"]
+CMD ["readlink", "app/main.py"]
