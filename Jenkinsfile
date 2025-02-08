@@ -22,11 +22,12 @@ pipeline {
     stages {
 
         // Checkout stage
-        stage('Checkout') {
-            steps {
-                git branch: github_branch, url: github_url
-            }
-        }
+        // stage('Checkout') {
+        //     steps {
+        //         git branch: github_branch, url: github_url
+        //     }
+        // }
+
         // Setup stage
         stage('Setup') {
             steps {
