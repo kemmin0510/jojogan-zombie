@@ -29,7 +29,7 @@ pipeline {
         // }
 
         // Setup stage
-        
+
         stage('Setup') {
             steps {
                 // echo 'Setting up environment..'
@@ -68,6 +68,6 @@ pipeline {
         //         echo 'Deploying models..'
         //         echo 'Running a script to trigger pull and start a docker container'
         //     }
-        }
+        // }
     }
 }
