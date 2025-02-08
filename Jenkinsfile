@@ -26,8 +26,8 @@ pipeline {
             steps {
                 // echo 'Setting up environment..'
                 sh 'chmod +x ./bin/build_deploy_local.sh'
-                sh './bin/build_deploy_local.sh 8086'
                 sh 'ls'
+                sh './bin/build_deploy_local.sh 8086'
             }
         }
 
