@@ -88,6 +88,14 @@ got-choice-env-mlflow:
 		echo "Invalid choice!"; \
 	fi
 
+# Build and deploy the application on local server
+build_deploy_local:
+	@echo "Building and deploying the application on local server..."; \
+	echo "Please input the port number on localhost: "; \
+	read -p 'Enter value: ' PORT; \
+
+	source ./bin/build_deploy_local.sh $(PORT)
+
 # Main menu
 menu:
 	@echo "Please select the option:"; \
@@ -95,6 +103,7 @@ menu:
 	echo '2) Create MLFlow, Minio and MySQL Server for logging the training results'; \
 	echo '3) Install Ninja Linux package'; \
 	echo '4) Download 68 Shape Predictor DLIB Model'; \
+	echo '5) Deploy the application on local server to develop'; \
 	read -p 'Enter value: ' result; \
 	$(MAKE) --no-print-directory got-choice CHOICE="$$result"
 
@@ -107,6 +116,8 @@ got-choice:
 		source ./bin/install_ninja.sh; \
 	elif [ "$(CHOICE)" = "4" ]; then \
 		source ./bin/download_dlib_model.sh; \
+	elif [ "$(CHOICE)" = "5" ]; then \
+		$(MAKE) build_deploy_local; \
 	else \
 		echo "Invalid choice!"; \
 	fi
