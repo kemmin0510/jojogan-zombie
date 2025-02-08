@@ -42,6 +42,8 @@ pipeline {
 
             steps {
                 echo 'Testing model correctness..'
+                sh 'ls'
+                sh 'pwd'
                 sh 'pip install pytest requests'
                 sh 'pytest'
                 sh 'docker rm -f test'
