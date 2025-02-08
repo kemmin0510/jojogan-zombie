@@ -3,14 +3,9 @@
 # Assign port in localhost to 8000 port of container
 PORT=$1
 
-if docker ps -a | awk '{print $7}' | grep -w test; then
-    docker stop test
-    docker rm test
-fi
-
-if docker images | awk '{print $1}' | grep -w test; then
-    docker rmi -f test
-fi
+# Remove test container and image
+docker ps -aq -f name=test | xargs -r docker rm -f
+docker images -q test | xargs -r docker rmi -f
 
 docker build -t test .
 docker run -d -p ${PORT}:8000 --rm --name test test
