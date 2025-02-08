@@ -1,9 +1,0 @@
-AUTHORS.rst
-LICENSE
-README.md
-pyproject.toml
-src/jojogan_zombie.egg-info/PKG-INFO
-src/jojogan_zombie.egg-info/SOURCES.txt
-src/jojogan_zombie.egg-info/dependency_links.txt
-src/jojogan_zombie.egg-info/requires.txt
-src/jojogan_zombie.egg-info/top_level.txt
