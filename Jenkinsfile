@@ -34,6 +34,7 @@ pipeline {
         stage('Test') {
             steps {
                 echo 'Testing model correctness..'
+                sh 'pip install pytest'
                 sh 'pytest'
                 sh 'docker rm -f test'
             }
