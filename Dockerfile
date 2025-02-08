@@ -1,7 +1,7 @@
-# Sử dụng Python 3.9.21 chính thức
+# Base image
 FROM python:3.9.21-slim
 
-# Thiết lập thư mục làm việc
+# Set working directory
 WORKDIR /app
 
 # Install libraries
@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y \
     make \
     libgl1-mesa-glx \
     libglib2.0-0 \
+    unzip \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy and install dependencies
@@ -28,10 +29,15 @@ RUN pip3 install torch torchvision torchaudio --index-url https://download.pytor
 # Copy directories to the container
 COPY /app /app/app
 COPY /utils /app/utils
-COPY /models/zombie.pt /models/zombie.pt
-COPY /models/stylegan2-ffhq-config-f.pt /models/stylegan2-ffhq-config-f.pt
-COPY /models/dlibshape_predictor_68_face_landmarks.dat /models/dlibshape_predictor_68_face_landmarks.dat
-COPY /models/e4e_ffhq_encode.pt /models/e4e_ffhq_encode.pt
+RUN gdown 1-lHVBy0fuZimCKw_ivABslfOjMYwrUYJ -O /app/models.zip
+RUN unzip /app/models.zip -d /
+
+RUN rm /app/models.zip
+
+# COPY /models/zombie.pt /models/zombie.pt
+# COPY /models/stylegan2-ffhq-config-f.pt /models/stylegan2-ffhq-config-f.pt
+# COPY /models/dlibshape_predictor_68_face_landmarks.dat /models/dlibshape_predictor_68_face_landmarks.dat
+# COPY /models/e4e_ffhq_encode.pt /models/e4e_ffhq_encode.pt
 
 # Mở port 8000 cho FastAPI
 EXPOSE 8000

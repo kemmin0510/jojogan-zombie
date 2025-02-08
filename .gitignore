@@ -111,7 +111,6 @@ ENV/
 # Model files
 !models/inversion_codes/zombie.pt
 models/*.pt
-# models/*.dat
 !models/inversion_codes/zombie.pt
 
 # Keep "models" folder

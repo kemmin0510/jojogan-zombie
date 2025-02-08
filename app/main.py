@@ -13,6 +13,10 @@ import uuid
 
 app = FastAPI()
 
+# @app.get("/")
+# async def read_root():
+#     return {"message": "Hello World"}
+
 # Set latent dim
 latent_dim = 512
 
@@ -20,8 +24,8 @@ latent_dim = 512
 device = 'cpu' # cuda or cpu
 
 # Set model path
-stylegan2_path = "/models/stylegan2-ffhq-config-f.pt"
-zombie_path = "/models/zombie.pt"
+stylegan2_path = "../models/stylegan2-ffhq-config-f.pt"
+zombie_path = "../models/zombie.pt"
 
 # Load the original generator
 generator = Generator(1024, latent_dim, 8, 2).to(device)
@@ -57,7 +61,7 @@ async def upload_file(file: UploadFile = File()):
     os.remove(temp_filename)
 
     processed_image = generated_image[0].permute(1, 2, 0).cpu().numpy()
-    processed_image = ((processed_image + 1) / 2.0) * 255  # Nếu ảnh từ [-1,1]
+    processed_image = ((processed_image + 1) / 2.0) * 255  # If image has been normalized to [-1, 1]
     processed_image = np.clip(processed_image, 0, 255).astype(np.uint8)
     # Convert to PIL message
     processed_image = Image.fromarray(processed_image)

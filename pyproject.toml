@@ -19,6 +19,7 @@ license = {text = "MIT license"}
 dependencies = [
   "dlib>=19.24.6",
   "fastapi[standard]>=0.115.8",
+  "gdown>=5.2.0",
   "matplotlib>=3.9.4",
   "numpy>=2.0.2",
   "opencv-python>=4.11.0.86",
