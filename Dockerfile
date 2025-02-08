@@ -33,7 +33,7 @@ COPY /utils /app/utils
 # RUN unzip /app/models.zip -d /
 
 # Remove the zip file
-RUN rm /app/models.zip
+# RUN rm /app/models.zip
 
 # Mở port 8000 cho FastAPI
 EXPOSE 8000
