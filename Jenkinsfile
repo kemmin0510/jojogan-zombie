@@ -36,8 +36,7 @@ pipeline {
             agent {
                 docker {
                     image 'python:3.9.21-slim'
-                    args '-v /root/.cache/pip:/root/.cache/pip'
-                    args '--network host -v /root/.cache/pip:/root/.cache/pip'
+                    args '-v /root/.cache/pip:/root/.cache/pip --network jenkins_network'
                 }
             }
 
