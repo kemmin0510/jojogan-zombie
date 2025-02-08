@@ -8,7 +8,7 @@ print(os.getcwd())
 
 def test_post():
     # Open image file
-    with open("../data/src/iu.jpeg", "rb") as img_file:
+    with open("iu.jpeg", "rb") as img_file:
         files = {"file": ("test_image.jpg", img_file, "image/jpeg")}
         
         # Send a POST request to the API
