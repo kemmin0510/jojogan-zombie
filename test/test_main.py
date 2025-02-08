@@ -3,7 +3,7 @@ import os
 
 # API_PORT = os.getenv('API_PORT', 8086)
 
-API_URL = f'http://test:8080/uploadfile/'
+API_URL = f'http://test:8000/uploadfile/'
 
 def test_post():
     # Open image file
