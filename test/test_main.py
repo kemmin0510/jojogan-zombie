@@ -4,6 +4,8 @@ import os
 API_PORT = os.getenv('API_PORT', 8086)
 API_URL = f'http://localhost:{API_PORT}/uploadfile/'
 
+print(os.getcwd())
+
 def test_post():
     # Open image file
     with open("../data/src/iu.jpeg", "rb") as img_file:
