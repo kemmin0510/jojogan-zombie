@@ -49,5 +49,5 @@ RUN readlink -f app/main.py
 RUN chmod +x app/main.py
 
 # Chạy ứng dụng FastAPI bằng Uvicorn
-# CMD ["python", "app/main.py"]
-CMD ["/bin/bash"]
+CMD ["python", "app/main.py"]
+# CMD ["/bin/bash"]
