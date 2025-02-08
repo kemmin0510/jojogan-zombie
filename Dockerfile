@@ -45,4 +45,4 @@ RUN ls
 RUN ls ./app
 
 # Chạy ứng dụng FastAPI bằng Uvicorn
-CMD ["python", "app/main.py"]
+CMD ["python", "./app/main.py"]
