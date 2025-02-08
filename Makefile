@@ -93,8 +93,7 @@ build_deploy_local:
 	@echo "Building and deploying the application on local server..."; \
 	echo "Please input the port number on localhost: "; \
 	read -p 'Enter value: ' PORT; \
-
-	source ./bin/build_deploy_local.sh $(PORT)
+	bash ./bin/build_deploy_local.sh $$PORT
 
 # Main menu
 menu:
