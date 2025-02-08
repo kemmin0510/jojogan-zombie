@@ -48,4 +48,5 @@ RUN readlink -f app/main.py
 
 RUN chmod +x app/main.py
 
-CMD ["readlink", "app/main.py"]
+CMD ["/bin/sh", "-c", "readlink -f app/main.py"]
+
