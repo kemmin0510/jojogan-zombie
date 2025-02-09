@@ -113,5 +113,8 @@ ENV/
 models/*.pt
 !models/inversion_codes/zombie.pt
 
+# Locust file
+test/locustfile.py
+
 # Keep "models" folder
 # !models/.gitkeep

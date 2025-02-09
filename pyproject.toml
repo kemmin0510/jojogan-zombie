@@ -72,6 +72,7 @@ dev = [
     "dlib>=19.24.6",
     "gdown>=5.2.0",
     "jupyter>=1.1.1",
+    "locust>=2.32.8",
     "lpips>=0.1.4",
     "mlflow>=2.20.1",
     "opencv-python>=4.11.0.86",
