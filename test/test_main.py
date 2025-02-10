@@ -18,3 +18,5 @@ def test_post():
         assert response.headers["Content-Type"].startswith("image/"), "Response is not an image"
 
     print("✅ Test passed: File uploaded and received successfully.")
+
+test_post()
