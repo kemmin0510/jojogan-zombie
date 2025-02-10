@@ -29,7 +29,7 @@ RUN pip install fastapi[standard]
 # # RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
 
 # # Copy directories to the container
-# COPY /app /app/app
+COPY /app /app/app
 # COPY /utils /app/utils
 
 # # Download models file
