@@ -30,6 +30,20 @@ pipeline {
             }
         }
 
+        // Wait for the test container to be ready
+        stage('Wait for Test Container') {
+            steps {
+                echo 'Waiting for container "test" to be ready..'
+                sh '''
+                    while ! docker ps -a --format "{{.Names}}" | grep -w "test"; do
+                        echo "Waiting for container 'test' to appear..."
+                        sleep 2
+                    done
+                    echo "Container 'test' detected! Moving to the Test stage."
+                '''
+            }
+        }
+
         // Test stage. Pytest is used to test the unit tests
         stage('Test') {
 
@@ -41,9 +55,12 @@ pipeline {
             }
             steps {
                 echo 'Testing model correctness..'
-                sh 'tail -f /dev/null'
+                sh 'pip install pytest requests'
+                sh 'pytest'
+                sh 'docker rm -f test'
             }
         }
+        
         // stage('Build') {
         //     steps {
         //         script {
