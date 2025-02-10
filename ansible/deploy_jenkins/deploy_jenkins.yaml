@@ -45,10 +45,15 @@
         name: docker
         enabled: yes
 
-    - name: Restart Docker service
+    - name: Stop Docker service
       systemd:
         name: docker
-        state: restarted
+        state: stopped
+
+    - name: Start Docker service
+      systemd:
+        name: docker
+        state: started
 
     - name: Pull the Docker image
       community.docker.docker_image:

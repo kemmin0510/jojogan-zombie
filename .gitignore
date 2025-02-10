@@ -118,3 +118,6 @@ test/locustfile.py
 
 # Keep "models" folder
 # !models/.gitkeep
+
+# Secret key
+*/secrets
