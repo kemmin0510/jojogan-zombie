@@ -20,7 +20,6 @@ import os
 #     print("✅ Test passed: File uploaded and received successfully.")
 
 API_URL = f'http://test:8000/'
-
 def test_get():
     response = requests.get(API_URL)
     assert response.status_code == 200, f"Unexpected status code: {response.status_code}"

@@ -40,21 +40,6 @@
         state: latest
         update_cache: true
 
-    - name: Enable Docker service
-      systemd:
-        name: docker
-        enabled: yes
-
-    - name: Stop Docker service
-      systemd:
-        name: docker
-        state: stopped
-
-    - name: Start Docker service
-      systemd:
-        name: docker
-        state: started
-
     - name: Pull the Docker image
       community.docker.docker_image:
         name: "{{ default_container_image }}"
