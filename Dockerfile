@@ -8,14 +8,14 @@ RUN apt-get update
 RUN pip install --upgrade pip
 
 # # Install libraries
-# RUN apt-get update && apt-get install -y \
-#     cmake \
-#     g++ \
-#     make \
-#     libgl1-mesa-glx \
-#     libglib2.0-0 \
-#     unzip \
-#     && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y \
+    cmake \
+    g++ \
+    make \
+    libgl1-mesa-glx \
+    libglib2.0-0 \
+    unzip \
+    && rm -rf /var/lib/apt/lists/*
 
 # # Copy and install dependencies
 COPY requirements.txt /app
