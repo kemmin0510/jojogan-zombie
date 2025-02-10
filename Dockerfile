@@ -6,7 +6,7 @@ WORKDIR /app
 
 RUN apt-get update
 RUN pip install --upgrade pip
-RUN pip install fastapi[standard] uvicorn pydantic
+RUN pip install fastapi==0.115.8 uvicorn==0.34.0 fastapi-cli==0.0.7 pydantic==2.10.6 pydantic-core==2.27.2
 
 
 # # Install libraries
