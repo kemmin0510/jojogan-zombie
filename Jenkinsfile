@@ -25,22 +25,8 @@ pipeline {
         stage('Setup') {
             steps {
                 echo 'Setting up environment..'
-                sh 'chmod +x ./bin/build_deploy_local.sh'
-                sh './bin/build_deploy_local.sh 8086'
-            }
-        }
-
-        // Wait for the test container to be ready
-        stage('Wait for Test Container') {
-            steps {
-                echo 'Waiting for container "test" to be ready..'
-                sh '''
-                    while ! docker ps -a --format "{{.Names}}" | grep -w "test"; do
-                        echo "Waiting for container 'test' to appear..."
-                        sleep 2
-                    done
-                    echo "Container 'test' detected! Moving to the Test stage."
-                '''
+                // sh 'chmod +x ./bin/build_deploy_local.sh'
+                sh 'docker run -d -p 8000:8000 --rm --name test --network jenkins_network test'
             }
         }
 
