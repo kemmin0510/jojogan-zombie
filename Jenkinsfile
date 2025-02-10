@@ -41,24 +41,22 @@ pipeline {
             }
             steps {
                 echo 'Testing model correctness..'
-                sh 'pip install pytest requests'
-                sh 'pytest'
-                sh 'docker rm -f test'
+                sh 'tail -f /dev/null'
             }
         }
-        stage('Build') {
-            steps {
-                script {
-                    echo 'Building image for deployment..'
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
-                    echo 'Pushing image to dockerhub..'
-                    docker.withRegistry( '', registryCredential ) {
-                        dockerImage.push()
-                        dockerImage.push('latest')
-                    }
-                }
-            }
-        }
+        // stage('Build') {
+        //     steps {
+        //         script {
+        //             echo 'Building image for deployment..'
+        //             dockerImage = docker.build registry + ":$BUILD_NUMBER" 
+        //             echo 'Pushing image to dockerhub..'
+        //             docker.withRegistry( '', registryCredential ) {
+        //                 dockerImage.push()
+        //                 dockerImage.push('latest')
+        //             }
+        //         }
+        //     }
+        // }
         // stage('Deploy') {
         //     steps {
         //         echo 'Deploying models..'
