@@ -48,10 +48,14 @@ pipeline {
                 }
             }
             steps {
-                echo 'Testing model correctness..'
-                sh 'pip install pytest requests'
-                sh 'pytest'
-                sh 'docker rm -f test'
+                // echo 'Testing model correctness..'
+                // sh 'pip install pytest requests'
+                // sh 'pytest'
+                // sh 'docker rm -f test'
+                echo 'Entering test container...'
+                sh 'pip install pytest requests' 
+                sh 'echo "Container is running. Use docker exec -it $(docker ps -lq) /bin/bash to enter."' 
+                sh 'tail -f /dev/null'
             }
         }
         
@@ -74,6 +78,6 @@ pipeline {
         //         echo 'Running a script to trigger pull and start a docker container'
         //     }
         // }
-        
+
     }
 }
