@@ -35,11 +35,11 @@ mean_latent = generator.mean_latent(10000)
 # Load the finetured parameters
 generator.load_state_dict(torch.load(zombie_path, map_location=device))
 
-@app.get("/uploadfile/")
+@app.post("/uploadfile/")
 async def upload_file(file: UploadFile = File()):
 
     # Create temp filename
-    temp_filename = f"/app/app/tmp/{uuid.uuid4().hex}.png"
+    temp_filename = f"{uuid.uuid4().hex}.png"
 
     # Save the temp file
     with open(temp_filename, "wb") as f:

@@ -49,6 +49,8 @@ pipeline {
             }
             steps {
                 echo 'Testing model correctness..'
+                sh 'apt-get update'
+                sh 'apt-get install -y curl'
                 sh 'pip install pytest requests'
                 // sh 'pytest'
 
