@@ -37,38 +37,37 @@ generator.load_state_dict(torch.load(zombie_path, map_location=device))
 
 @app.get("/uploadfile/")
 async def upload_file(file: UploadFile = File()):
-    return {"filename": file.filename}
 
-    # # Create temp filename
-    # temp_filename = f"/app/app/tmp/{uuid.uuid4().hex}.png"
+    # Create temp filename
+    temp_filename = f"/app/app/tmp/{uuid.uuid4().hex}.png"
 
-    # # Save the temp file
-    # with open(temp_filename, "wb") as f:
-    #     f.write(await file.read())
+    # Save the temp file
+    with open(temp_filename, "wb") as f:
+        f.write(await file.read())
 
-    # # Aligns and crops face from the source image
-    # aligned_face = align_face(temp_filename)
+    # Aligns and crops face from the source image
+    aligned_face = align_face(temp_filename)
 
-    # # Project the aligned face to latent space
-    # my_w = e4e_projection(img=aligned_face, device=device).unsqueeze(0)
+    # Project the aligned face to latent space
+    my_w = e4e_projection(img=aligned_face, device=device).unsqueeze(0)
 
-    # # Generatre the image
-    # with torch.no_grad():
-    #     generated_image = generator(my_w, input_is_latent=True)
-    #     # utils.save_image(generated_image, "generated.png", normalize=True)
+    # Generatre the image
+    with torch.no_grad():
+        generated_image = generator(my_w, input_is_latent=True)
+        # utils.save_image(generated_image, "generated.png", normalize=True)
 
-    # # Remove temp file
-    # os.remove(temp_filename)
+    # Remove temp file
+    os.remove(temp_filename)
 
-    # processed_image = generated_image[0].permute(1, 2, 0).cpu().numpy()
-    # processed_image = ((processed_image + 1) / 2.0) * 255  # If image has been normalized to [-1, 1]
-    # processed_image = np.clip(processed_image, 0, 255).astype(np.uint8)
-    # # Convert to PIL message
-    # processed_image = Image.fromarray(processed_image)
+    processed_image = generated_image[0].permute(1, 2, 0).cpu().numpy()
+    processed_image = ((processed_image + 1) / 2.0) * 255  # If image has been normalized to [-1, 1]
+    processed_image = np.clip(processed_image, 0, 255).astype(np.uint8)
+    # Convert to PIL message
+    processed_image = Image.fromarray(processed_image)
     
-    # # Store in buffer
-    # buf = io.BytesIO()
-    # processed_image.save(buf, format="PNG")
-    # buf.seek(0)
+    # Store in buffer
+    buf = io.BytesIO()
+    processed_image.save(buf, format="PNG")
+    buf.seek(0)
 
-    # return StreamingResponse(buf, media_type="image/png")
+    return StreamingResponse(buf, media_type="image/png")
