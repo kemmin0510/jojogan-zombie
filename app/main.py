@@ -3,12 +3,12 @@ import sys, io
 sys.path.insert(0, '/app')
 from fastapi import FastAPI, File, UploadFile
 # from fastapi.responses import FileResponse, StreamingResponse
-from torchvision import utils
+# from torchvision import utils
 # from utils.model import *
 # from utils.e4e_projection import projection as e4e_projection
 # from utils.util import *
-import torch
-import uuid
+# import torch
+# import uuid
 
 app = FastAPI()
 
