@@ -12,9 +12,9 @@ import uuid
 
 app = FastAPI()
 
-@app.get("/")
-async def read_root():
-    return {"message": "Hello World"}
+# @app.get("/")
+# async def read_root():
+#     return {"message": "Hello World"}
 
 # Set latent dim
 latent_dim = 512
