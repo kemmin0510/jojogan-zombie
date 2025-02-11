@@ -30,6 +30,14 @@ pipeline {
             }
         }
 
+        // Check container
+        stage('Check') {
+            steps {
+                echo 'Checking container..'
+                sh 'docker ps'
+            }
+        }
+
         // Test stage. Pytest is used to test the unit tests
         stage('Test') {
 

@@ -1,5 +1,5 @@
 # Base image
-FROM minhnhk/python-jojogan-zombie:latest
+FROM minhnhk/python-jojogan-zombie:v1
 
 # Set working directory
 # WORKDIR /app
@@ -29,18 +29,18 @@ FROM minhnhk/python-jojogan-zombie:latest
 # RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
 
 # # Copy directories to the container
-COPY /app /app/app
-COPY /utils /app/utils
+# COPY /app /app/app
+# COPY /utils /app/utils
 
-# Download models file
-RUN gdown 1-lHVBy0fuZimCKw_ivABslfOjMYwrUYJ -O /app/models.zip
-RUN unzip /app/models.zip -d /
+# # Download models file
+# RUN gdown 1-lHVBy0fuZimCKw_ivABslfOjMYwrUYJ -O /app/models.zip
+# RUN unzip /app/models.zip -d /
 
-# Remove the zip file
-RUN rm /app/models.zip
+# # Remove the zip file
+# RUN rm /app/models.zip
 
-# Expose the port
-EXPOSE 8000
+# # Expose the port
+# EXPOSE 8000
 
 # Run the FastAPI application
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "1", "--reload"]
