@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
     unzip \
     && rm -rf /var/lib/apt/lists/*
 
-# # Copy and install dependencies
+# Copy and install dependencies
 COPY requirements.txt /app
 
 # RUN pip install --upgrade pip
@@ -25,17 +25,5 @@ RUN pip install --no-cache -r requirements.txt
 
 # install pytorch with cpu
 RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
-
-# Copy directories to the container
-# COPY /app /app/app
-COPY /utils /app/utils
-
-# Download models file
-RUN gdown 1-lHVBy0fuZimCKw_ivABslfOjMYwrUYJ -O /app/models.zip
-RUN unzip /app/models.zip -d /
-
-# Remove the zip file
-RUN rm /app/models.zip
-
-# Expose the port
-EXPOSE 8000
+# install pytorch with cuda 126. Remember run --gpus all in CLI
+# RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu126
