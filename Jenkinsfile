@@ -26,7 +26,7 @@ pipeline {
             steps {
                 echo 'Setting up environment..'
                 sh 'chmod +x ./bin/build_deploy_local.sh'
-                sh './bin/build_deploy_local.sh 8086'
+                sh './bin/build_deploy_local.sh 8000'
             }
         }
 
@@ -55,7 +55,6 @@ pipeline {
                 // sh 'pytest'
 
                 echo 'Entering test container...'
-                sh 'pip install pytest requests' 
                 sh 'echo "Container is running. Use docker exec -it $(docker ps -lq) /bin/bash to enter."' 
                 sh 'tail -f /dev/null'
             }

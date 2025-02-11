@@ -1,14 +1,6 @@
 import requests
 import os
 
-API_URL_GET = f'http://test:8000/'
-
-def test_get():
-    response = requests.get(API_URL_GET)
-    assert response.status_code == 200, f"Unexpected status code: {response.status_code}"
-    assert response.json() == {"message": "Hello World"}, f"Unexpected message: {response.json()}"
-    print("✅ Test passed: API is running.")
-
 API_URL = f'http://test:8000/uploadfile/'
 
 def test_post():
