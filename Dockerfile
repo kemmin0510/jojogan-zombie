@@ -1,5 +1,5 @@
 # Base image
-FROM minhnhk/python-jojogan-zombie:v1
+FROM minhnhk/python-jojogan-zombie:v2
 
 # Set working directory
 WORKDIR /app
