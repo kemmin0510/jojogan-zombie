@@ -2,7 +2,7 @@
 import sys, io
 sys.path.insert(0, '/app')
 from fastapi import FastAPI, File, UploadFile
-# from fastapi.responses import FileResponse, StreamingResponse
+from fastapi.responses import FileResponse, StreamingResponse
 # from torchvision import utils
 # from utils.model import *
 # from utils.e4e_projection import projection as e4e_projection
