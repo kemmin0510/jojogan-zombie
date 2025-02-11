@@ -27,7 +27,7 @@ RUN pip install --no-cache -r requirements.txt
 RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cpu
 
 # Copy directories to the container
-COPY /app /app/app
+# COPY /app /app/app
 COPY /utils /app/utils
 
 # Download models file
