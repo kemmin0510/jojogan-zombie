@@ -52,27 +52,28 @@ pipeline {
                 sh 'apt-get update'
                 sh 'apt-get install -y curl'
                 sh 'pip install pytest requests'
-                // sh 'pytest'
+                sh 'pytest'
 
-                echo 'Entering test container...'
-                sh 'echo "Container is running. Use docker exec -it $(docker ps -lq) /bin/bash to enter."' 
-                sh 'tail -f /dev/null'
+                // echo 'Entering test container...'
+                // sh 'echo "Container is running. Use docker exec -it $(docker ps -lq) /bin/bash to enter."' 
+                // sh 'tail -f /dev/null'
             }
         }
         
-        // stage('Build') {
-        //     steps {
-        //         script {
-        //             echo 'Building image for deployment..'
-        //             dockerImage = docker.build registry + ":$BUILD_NUMBER" 
-        //             echo 'Pushing image to dockerhub..'
-        //             docker.withRegistry( '', registryCredential ) {
-        //                 dockerImage.push()
-        //                 dockerImage.push('latest')
-        //             }
-        //         }
-        //     }
-        // }
+        stage('Build') {
+            steps {
+                script {
+                    echo 'Building image for deployment..'
+                    dockerImage = docker.build registry + ":$BUILD_NUMBER" 
+                    echo 'Pushing image to dockerhub..'
+                    docker.withRegistry( '', registryCredential ) {
+                        dockerImage.push()
+                        dockerImage.push('latest')
+                    }
+                }
+            }
+        }
+        
         // stage('Deploy') {
         //     steps {
         //         echo 'Deploying models..'
