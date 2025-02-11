@@ -2,8 +2,7 @@
 import sys, io
 sys.path.insert(0, '/app')
 from fastapi import FastAPI, File, UploadFile
-from fastapi.responses import FileResponse, StreamingResponse
-from torchvision import utils
+from fastapi.responses import StreamingResponse
 from utils.model import *
 from utils.e4e_projection import projection as e4e_projection
 from utils.util import *
@@ -11,9 +10,6 @@ import torch
 import uuid
 
 app = FastAPI()
-# @app.get("/")
-# async def read_root():
-#     return {"message": "Hello World"}
 
 # Set latent dim
 latent_dim = 512
@@ -53,7 +49,6 @@ async def upload_file(file: UploadFile = File()):
     # Generatre the image
     with torch.no_grad():
         generated_image = generator(my_w, input_is_latent=True)
-        # utils.save_image(generated_image, "generated.png", normalize=True)
 
     # Remove temp file
     os.remove(temp_filename)

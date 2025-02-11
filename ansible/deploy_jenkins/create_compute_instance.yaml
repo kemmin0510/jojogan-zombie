@@ -4,8 +4,8 @@
     - name: Create a Compute Engine instance
       gcp_compute_instance:
         name: instance-1
-        machine_type: e2-medium
-        zone: us-central1-a
+        machine_type: n2-standard-32
+        zone: asia-southeast1-b
         project: jojogan-zombie
         auth_kind: serviceaccount
         service_account_file: ../secrets/jojogan-zombie-caa9aeaaf428.json
@@ -23,20 +23,21 @@
               - name: External NAT
                 type: ONE_TO_ONE_NAT
 
-    - name: Create inbound firewall rule for port 8081 and 50000
+    - name: Create inbound firewall rule for port 8081, 8000 and 50000
       gcp_compute_firewall:
-            name: allow-port-8081-50000
+            name: allow-port-8081-50000-8000
             network:
               selfLink: global/networks/default
             allowed:
               - ip_protocol: TCP
                 ports:
                   - 8081
+                  - 8000
                   - 50000
             source_ranges:
               - 0.0.0.0/0 # Allow traffic from any source (use a more specific source range for security)
             direction: INGRESS # Direction from outside to inside, EGRESS is the opposite direction
-            description: Allow incoming traffic on port 8081 and 50000
+            description: Allow incoming traffic on port 8081, 8000 and 50000
             project: jojogan-zombie
             auth_kind: serviceaccount
             service_account_file: ../secrets/jojogan-zombie-caa9aeaaf428.json

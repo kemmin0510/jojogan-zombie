@@ -30,6 +30,7 @@ FROM minhnhk/python-jojogan-zombie:v1
 
 # # Copy directories to the container
 COPY /app /app/app
+COPY /test /app/test
 # COPY /utils /app/utils
 
 # # Download models file
