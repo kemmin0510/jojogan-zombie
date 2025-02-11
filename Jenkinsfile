@@ -74,5 +74,6 @@ pipeline {
         //         echo 'Running a script to trigger pull and start a docker container'
         //     }
         // }
+        
     }
 }
