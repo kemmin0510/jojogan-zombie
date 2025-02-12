@@ -75,6 +75,7 @@ pipeline {
         }
         
         stage('Deploy') {
+            
             agent {
                 kubernetes {
                     containerTemplate {
