@@ -89,6 +89,7 @@ pipeline {
                 script {
                     container('helm') {
                         sh("helm upgrade --install jojogan-zombie ./helm/jojogan-zombie --namespace model-serving")
+                        }
                     }
                 }
             }
