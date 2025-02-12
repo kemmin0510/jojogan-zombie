@@ -3,13 +3,13 @@
   tasks:
     - name: Create GKE Cluster
       google.cloud.gcp_container_cluster:
-        name: my-gke-cluster
+        name: jojogan-zombie-cluster
         project: jojogan-zombie
         location: asia-southeast1-b 
-        initial_node_count: 1
+        initial_node_count: 3
         node_config:
-          machine_type: n1-standard-1
-          disk_size_gb: 30
+          machine_type: e2-standard-4
+          disk_size_gb: 15
         auth_kind: serviceaccount
         service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
       register: gke_cluster
@@ -25,3 +25,18 @@
         source_ranges: ["0.0.0.0/0"]
         target_tags: ["gke-cluster"]
         auth_kind: serviceaccount
+        service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
+
+    - name: Enable External API Server Access
+      google.cloud.gcp_container_cluster:
+        name: jojogan-zombie-cluster
+        project: jojogan-zombie
+        location: asia-southeast1-b
+        master_authorized_networks_config:
+          enabled: true
+          cidr_blocks:
+            - cidr_block: "0.0.0.0/0"
+              display_name: "Allow All"
+        auth_kind: serviceaccount
+        service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
+      when: gke_cluster is changed
