@@ -75,12 +75,12 @@ pipeline {
         }
         
         stage('Deploy') {
-            
+
             agent {
                 kubernetes {
                     containerTemplate {
                         name 'helm' // Name of the container to be used for helm upgrade
-                        image 'alpine/helm:latest'  // The image containing helm
+                        image 'minhnhk/jenkins:lts-jdk17' // The image containing helm
                         alwaysPullImage true // Always pull image in case of using the same tag
                     }
                 }
