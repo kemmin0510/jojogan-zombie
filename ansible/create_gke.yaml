@@ -1,0 +1,27 @@
+- name: Create GKE Cluster on Google Cloud
+  hosts: localhost
+  tasks:
+    - name: Create GKE Cluster
+      google.cloud.gcp_container_cluster:
+        name: my-gke-cluster
+        project: jojogan-zombie
+        location: asia-southeast1-b 
+        initial_node_count: 1
+        node_config:
+          machine_type: n1-standard-1
+          disk_size_gb: 30
+        auth_kind: serviceaccount
+        service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
+      register: gke_cluster
+
+    - name: Open port 8000 in firewall
+      google.cloud.gcp_compute_firewall:
+        name: allow-8000
+        project: jojogan-zombie
+        allowed:
+          - ip_protocol: tcp
+            ports: ["8000"]
+        direction: INGRESS
+        source_ranges: ["0.0.0.0/0"]
+        target_tags: ["gke-cluster"]
+        auth_kind: serviceaccount

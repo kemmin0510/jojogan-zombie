@@ -1,0 +1,4 @@
+image:
+  repository: minhnhk/jojogan-zombie
+  tag: latest
+  pullPolicy: Always
