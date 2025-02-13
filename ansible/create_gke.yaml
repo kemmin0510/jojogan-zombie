@@ -9,7 +9,7 @@
         initial_node_count: 1
         node_config:
           machine_type: e2-standard-4
-          disk_size_gb: 50
+          disk_size_gb: 25
         auth_kind: serviceaccount
         service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
         state: absent
@@ -25,17 +25,17 @@
         initial_node_count: 3
         config:
           machine_type: e2-standard-4
-          disk_size_gb: 50
+          disk_size_gb: 25
         auth_kind: serviceaccount
         service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
 
-    - name: Open port 8000 in firewall
+    - name: Open port 8000, 8099, 8080 and 9100 in firewall
       google.cloud.gcp_compute_firewall:
-        name: allow-8000
+        name: allow-8000-8099-8080-9100
         project: jojogan-zombie
         allowed:
           - ip_protocol: tcp
-            ports: ["8000"]
+            ports: ["8000", "8099", "8080", "9100"]
         direction: INGRESS
         source_ranges: ["0.0.0.0/0"]
         target_tags: ["gke-cluster"]

@@ -4,7 +4,7 @@
     - name: Create a Compute Engine instance
       gcp_compute_instance:
         name: instance-1
-        machine_type: e2-standard-4
+        machine_type: e2-standard-2
         zone: asia-southeast1-b
         project: jojogan-zombie
         auth_kind: serviceaccount
@@ -15,7 +15,7 @@
             boot: true
             initialize_params:
               source_image: projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20230727
-              disk_size_gb: 20
+              disk_size_gb: 15
         network_interfaces:
           - network:
               selfLink: global/networks/default
