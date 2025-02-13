@@ -12,7 +12,7 @@
           disk_size_gb: 25
         auth_kind: serviceaccount
         service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
-        state: absent
+        state: present
       register: gke_cluster
 
     - name: Create Node Pool with 3 Nodes

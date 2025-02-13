@@ -110,6 +110,7 @@ menu:
 	echo '5) Deploy the application on local server to develop'; \
 	echo '6) Copy the elk-docker-compose folder to compute engine'; \
 	echo '7) Deploy filebeat pod to GKE'; \
+	echo '8) Create namespace and grant permission for GKE'; \
 	read -p 'Enter value: ' result; \
 	$(MAKE) --no-print-directory got-choice CHOICE="$$result"
 
@@ -128,6 +129,8 @@ got-choice:
 		$(MAKE) copy_elk_docker_compose; \
 	elif [ "$(CHOICE)" = "7" ]; then \
 		source ./bin/helm_filebeat.sh; \
+	elif [ "$(CHOICE)" = "8" ]; then \
+		source ./bin/create_ns_grant_permission_gke.sh; \
 	else \
 		echo "Invalid choice!"; \
 	fi
