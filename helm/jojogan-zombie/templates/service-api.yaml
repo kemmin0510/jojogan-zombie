@@ -9,7 +9,12 @@ spec:
   selector:
     app: {{ .Release.Name }}
   ports:
-    - port: 8000
+    - name: model-serving
+      port: 8000
       protocol: TCP
       targetPort: 8000 # Model Serving Port
+    - name: metrics
+      port: 8099
+      protocol: TCP
+      targetPort: 8099 # Metric Port
   type: LoadBalancer

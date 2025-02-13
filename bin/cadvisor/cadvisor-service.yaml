@@ -6,9 +6,10 @@ metadata:
   labels:
     app: cadvisor
 spec:
-  selector:
-    app.kubernetes.io/name: cadvisor
+  type: LoadBalancer  # Hoặc NodePort
   ports:
-    - protocol: TCP
-      port: 8080
+    - port: 8080
       targetPort: 8080
+      protocol: TCP
+  selector:
+    app: cadvisor

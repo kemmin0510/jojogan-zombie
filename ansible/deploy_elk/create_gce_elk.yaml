@@ -9,7 +9,7 @@
         project: jojogan-zombie
         auth_kind: serviceaccount
         service_account_file: ../secrets/jojogan-zombie-caa9aeaaf428.json
-        state: absent # Change to present to create the instance 
+        state: present # Change to present to create the instance 
         disks:
           - auto_delete: true
             boot: true
@@ -23,9 +23,9 @@
               - name: External NAT
                 type: ONE_TO_ONE_NAT
 
-    - name: Create inbound firewall rule for port 9200 and 5601
+    - name: Create inbound firewall rule for port 9200, 5601 and 3000
       gcp_compute_firewall:
-            name: allow-port-9200-5601
+            name: allow-port-9200-5601-3000
             network:
               selfLink: global/networks/default
             allowed:
@@ -33,10 +33,11 @@
                 ports:
                   - 9200
                   - 5601
+                  - 3000
             source_ranges:
               - 0.0.0.0/0 # Allow traffic from any source (use a more specific source range for security)
             direction: INGRESS # Direction from outside to inside, EGRESS is the opposite direction
-            description: 9200 Elasticsearch, 5601 Kibana 
+            description: 9200 Elasticsearch, 5601 Kibana, 3000 Grafana
             project: jojogan-zombie
             auth_kind: serviceaccount
             service_account_file: ../secrets/jojogan-zombie-caa9aeaaf428.json

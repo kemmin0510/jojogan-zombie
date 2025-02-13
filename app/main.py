@@ -25,11 +25,10 @@ warnings.filterwarnings("ignore", category=UserWarning)
 start_http_server(port=8099, addr="0.0.0.0")
 
 # Service name is required for most backends
-resource = Resource(attributes={SERVICE_NAME: "ocr-service"})
+resource = Resource(attributes={SERVICE_NAME: "jojogan-zombie"})
 
-# Exporter to export metrics to Prometheus
+# Define the metric reader and proovider
 reader = PrometheusMetricReader()
-
 # Meter is responsible for creating and recording metrics
 provider = MeterProvider(resource=resource, metric_readers=[reader])
 set_meter_provider(provider)
@@ -48,29 +47,33 @@ histogram = meter.create_histogram(
 )
 
 # Decorator the function to count the number of requests
-def count_requests(func):
-    def wrapper(*args, **kwargs):
-        start_time = time()
+def run_metrics():
+    def decorator(func):
+        @functools.wraps(func)
+        async def wrapper(*args, **kwargs):
+            start_time = time()
 
-        # Call the function
-        result = func(*args, **kwargs)
+            # Call the function
+            result = await func(*args, **kwargs)
 
-        # Labels for all metrics
-        label = {"api": "jojogan_zombie"}
+            # Labels for all metrics
+            label = {"api": "jojogan_zombie"}
 
-        # Increment the counter
-        counter.add(10, label)
+            # Increment the counter
+            counter.add(1, label)
+            print("Counter incremented")
 
-        # Mark the end of the response
-        end_time = time()
-        elapsed_time = end_time - start_time
+            # Mark the end of the response
+            end_time = time()
+            elapsed_time = end_time - start_time
 
-        # Add histogram
-        logger.info('elapsed_time: {}'.format(elapsed_time))
-        histogram.record(elapsed_time, label)
+            # Add histogram
+            logger.info('elapsed_time: {}'.format(elapsed_time))
+            histogram.record(elapsed_time, label)
 
-        return result
-
+            return result
+        return wrapper
+    return decorator
 
 app = FastAPI()
 
@@ -94,9 +97,11 @@ mean_latent = generator.mean_latent(10000)
 generator.load_state_dict(torch.load(zombie_path, map_location=device))
 
 # Set the generator to evaluation mode
-@count_requests
 @app.post("/uploadfile/") # Post method
+@run_metrics()
 async def upload_file(file: UploadFile = File()):
+
+    print("abc")
 
     # Create temp filename
     temp_filename = f"{uuid.uuid4().hex}.png"

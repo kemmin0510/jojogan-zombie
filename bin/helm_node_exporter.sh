@@ -11,10 +11,6 @@ fi
 # Install node-exporter
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo update
-helm install node-exporter prometheus-community/prometheus-node-exporter --namespace kube-metrics
-
-# Check pods available
-kubectl get pods -l app.kubernetes.io/name=prometheus-node-exporter
-
-# Apply service
-kubectl apply -f $SCRIPT_DIR/node_exporter/node-exporter-service.yaml
+helm upgrade --install node-exporter prometheus-community/prometheus-node-exporter \
+  --namespace kube-metrics \
+  -f $SCRIPT_DIR/node_exporter/node-exporter-values.yaml
