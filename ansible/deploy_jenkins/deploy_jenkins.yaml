@@ -1,5 +1,5 @@
 - name: Deploy
-  hosts: servers # Which host to apply, you can replace by `servers`, or by `servers_1, servers_2` for multiple groups
+  hosts: jenkins # Which host to apply, you can replace by `servers`, or by `servers_1, servers_2` for multiple groups
   become: yes # To run commands as a superuser (e.g., sudo)
   vars:
     default_container_name: jenkins

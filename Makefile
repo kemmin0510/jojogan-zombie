@@ -95,6 +95,11 @@ build_deploy_local:
 	read -p 'Enter value: ' PORT; \
 	bash ./bin/build_deploy_local.sh $$PORT
 
+copy_elk_docker_compose:
+	@echo "Please make sure your localhost is connected to the compute engine via SSH..."; \
+	read -p 'Enter GCP External IP: ' GCE_EXTERNAL_IP; \
+	scp -i ~/.ssh/id_rsa -r elk-docker-compose minhnhk@$$GCE_EXTERNAL_IP:/home/minhnhk
+
 # Main menu
 menu:
 	@echo "Please select the option:"; \
@@ -103,6 +108,8 @@ menu:
 	echo '3) Install Ninja Linux package'; \
 	echo '4) Download 68 Shape Predictor DLIB Model'; \
 	echo '5) Deploy the application on local server to develop'; \
+	echo '6) Copy the elk-docker-compose folder to compute engine'; \
+	echo '7) Deploy filebeat pod to GKE'; \
 	read -p 'Enter value: ' result; \
 	$(MAKE) --no-print-directory got-choice CHOICE="$$result"
 
@@ -117,6 +124,10 @@ got-choice:
 		source ./bin/download_dlib_model.sh; \
 	elif [ "$(CHOICE)" = "5" ]; then \
 		$(MAKE) build_deploy_local; \
+	elif [ "$(CHOICE)" = "6" ]; then \
+		$(MAKE) copy_elk_docker_compose; \
+	elif [ "$(CHOICE)" = "7" ]; then \
+		source ./bin/helm_filebeat.sh; \
 	else \
 		echo "Invalid choice!"; \
 	fi

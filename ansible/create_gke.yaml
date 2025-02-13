@@ -6,15 +6,16 @@
         name: jojogan-zombie-cluster
         project: jojogan-zombie
         location: asia-southeast1-b 
-        initial_node_count: 3
+        initial_node_count: 1
         node_config:
           machine_type: e2-standard-4
-          disk_size_gb: 15
+          disk_size_gb: 50
         auth_kind: serviceaccount
         service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
+        state: absent
       register: gke_cluster
 
-    - name: Create Node Pool
+    - name: Create Node Pool with 3 Nodes
       google.cloud.gcp_container_node_pool:
         name: default-pool
         cluster: 
@@ -24,7 +25,7 @@
         initial_node_count: 3
         config:
           machine_type: e2-standard-4
-          disk_size_gb: 15
+          disk_size_gb: 50
         auth_kind: serviceaccount
         service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
 

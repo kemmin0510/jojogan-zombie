@@ -6,7 +6,7 @@ from utils.e4e.models.psp import pSp
 
 @ torch.no_grad()
 def projection(img, name=None, device='cuda'):
-    model_path = '../models/e4e_ffhq_encode.pt'
+    model_path = './models/e4e_ffhq_encode.pt'
     ckpt = torch.load(model_path, map_location='cpu')
     opts = ckpt['opts']
     opts['checkpoint_path'] = model_path

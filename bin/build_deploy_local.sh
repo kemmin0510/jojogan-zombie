@@ -5,7 +5,9 @@ PORT=$1
 
 # Remove test container and image
 docker ps -aq -f name=test | xargs -r docker rm -f
-docker images -q test | xargs -r docker rmi -f
 
+docker images -q test | xargs -r docker rmi -f
+docker rmi $(docker images -f "dangling=true" -q)
 docker build -t test .
-docker run -d -p ${PORT}:8000 --rm --name test --network jenkins_network test
+
+docker run -p ${PORT}:8000 -p 8099:8099 --rm --name test --network jenkins-docker-compose_jenkins_network test
