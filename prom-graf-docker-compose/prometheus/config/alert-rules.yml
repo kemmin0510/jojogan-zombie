@@ -12,11 +12,11 @@ groups:
 
 - name: Containers
   rules:
-  - alert: OCRHighMemory
+  - alert: JoJoganZombieHighCpuUsage
     expr: sum(rate(container_cpu_usage_seconds_total{name="demo-metrics"}[5m]))*100 > 100
     for: 30s # Send out noti if the condition is true for more than 30 seconds
     labels:
       severity: warning
     annotations:
-      summary: OCR high cpu usage
-      description: OCR cpu consumption is at {{ humanize $value}}%
+      summary: High cpu usage
+      description: Cpu consumption is at {{ humanize $value}}%

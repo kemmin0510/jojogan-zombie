@@ -20,4 +20,7 @@ kubectl create secret generic elastic-credentials -n kube-logging \
   --from-literal=port=$ELASTIC_PORT \
   --dry-run=client -o yaml | kubectl apply -f -
 
+# Debug mode. We do not have the certificates yet
+kubectl create secret generic elasticsearch-master-certs -n kube-logging
+
 helm upgrade --install filebeat elastic/filebeat -n kube-logging -f $SCRIPT_DIR/filebeat/values.yaml

@@ -98,8 +98,8 @@ build_deploy_local:
 copy_elk_prom_graf_docker_compose:
 	@echo "Please make sure your localhost is connected to the compute engine via SSH..."; \
 	read -p 'Enter GCP External IP: ' GCE_EXTERNAL_IP; \
-	scp -i ~/.ssh/id_rsa -r elk-docker-compose minhnhk@$$GCE_EXTERNAL_IP:/home/minhnhk
-	scp -i ~/.ssh/id_rsa -r prom-graf-docker-compose minhnhk@$$GCE_EXTERNAL_IP:/home/minhnhk
+	scp -i ~/.ssh/id_rsa -r elk-docker-compose minhnhk@$$GCE_EXTERNAL_IP:/home/minhnhk; \
+	scp -i ~/.ssh/id_rsa -r prom-graf-docker-compose minhnhk@$$GCE_EXTERNAL_IP:/home/minhnhk;
 
 # Main menu
 menu:
@@ -113,7 +113,7 @@ menu:
 	echo '7) Deploy filebeat pod to GKE'; \
 	echo '8) Create namespace and grant permission for GKE'; \
 	read -p 'Enter value: ' result; \
-	$(MAKE) --no-print-directory got-choice CHOICE="$$result"
+	$(MAKE) --no-print-directory got-choice CHOICE="$$result";
 
 got-choice:
 	@if [ "$(CHOICE)" = "1" ]; then \
