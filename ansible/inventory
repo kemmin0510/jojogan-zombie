@@ -1,5 +1,5 @@
 [jenkins]
-34.142.144.46 ansible_ssh_private_key_file=~/.ssh/id_rsa
+34.143.138.171 ansible_ssh_private_key_file=~/.ssh/id_rsa
 
 [elk]
-34.143.183.171 ansible_ssh_private_key_file=~/.ssh/id_rsa
+34.143.186.22 ansible_ssh_private_key_file=~/.ssh/id_rsa
