@@ -4,7 +4,7 @@
     - name: Create a Compute Engine instance
       gcp_compute_instance:
         name: instance-1
-        machine_type: e2-standard-4
+        machine_type: e2-standard-8
         zone: us-central1-a
         project: jojogan-zombie
         auth_kind: serviceaccount
