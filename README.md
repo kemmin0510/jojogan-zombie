@@ -63,6 +63,29 @@ And we will integrate CI/CD to deploy the product on Google Kubernetes Engine (G
 - MLFlow also log the artifact, which are the S3 objects such as the training model and testing results
 ![test](./static/test.png)
 
+## CI/CD Pipeline
+
+In this project, we integrate GitHub and Jenkins to automate the CI/CD process.
+
+- GitHub serves as the version control system, where all source code, configuration files, and model training scripts are stored.
+-Jenkins, running inside a Docker container on **Google Compute Engine (GCE)**, is used to automate testing, containerization, and deployment. It is configured to trigger workflows whenever there is a new commit or pull request in the repository.
+- Pytest is used for unit and integration testing to ensure code stability.
+- Docker is used to package the application, create a Docker image, and push it to Docker Hub.
+- Helm is utilized to deploy the application to Google Kubernetes Engine (GKE).
+
+![cicd](./static/ci-cd.png)
+
+📝 When a change is pushed to the repository (commit, pull request), Jenkins automatically triggers the pipeline
+   - Pytest runs automated tests to verify code correctness.
+   - If all tests pass, the pipeline proceeds to the build stage.
+   - Docker packages the application into a container.
+   - The built Docker image is pushed to Docker Hub.
+   - Helm is used to deploy the containerized application to Google Kubernetes Engine (GKE).
+   - Kubernetes services are updated to ensure the system runs the latest version.
+</detail>
+
+
+## fdsfsd
 ## Acknowledgements
 
 This project makes use of the following tools and libraries:
