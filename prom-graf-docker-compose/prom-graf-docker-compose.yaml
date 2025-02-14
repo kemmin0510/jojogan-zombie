@@ -53,6 +53,7 @@ services:
     restart: unless-stopped
     volumes:
       - grafana_data:/var/lib/grafana
+      - ./grafana/config/grafana.ini:/etc/grafana/grafana.ini
       - ./grafana/config/dashboards.yaml:/etc/grafana/provisioning/dashboards/dashboards.yaml:ro
       - ./grafana/config/datasources.yaml:/etc/grafana/provisioning/datasources/datasource.yaml:ro
       - ./grafana/dashboards:/opt/grafana/dashboards
@@ -63,7 +64,7 @@ services:
       - 3000:3000
     networks:
       - monitoring
-    healthcheck:
-      test: ["CMD-SHELL", "curl -f localhost:3000/api/health && echo 'ready'"]
-      interval: 10s
-      retries: 10
+    # healthcheck:
+    #   test: ["CMD-SHELL", "curl -f localhost:3000/api/health && echo 'ready'"]
+    #   interval: 10s
+    #   retries: 10

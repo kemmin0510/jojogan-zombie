@@ -101,6 +101,14 @@ copy_elk_prom_graf_docker_compose:
 	scp -i ~/.ssh/id_rsa -r elk-docker-compose minhnhk@$$GCE_EXTERNAL_IP:/home/minhnhk; \
 	scp -i ~/.ssh/id_rsa -r prom-graf-docker-compose minhnhk@$$GCE_EXTERNAL_IP:/home/minhnhk;
 
+# Deploy Node Exporter and CAdvisor to GKE
+deploy_node_exporter_cadvisor:
+	@echo "Please make sure you have installed gcloud and kubectl..."; \
+	echo "Please make sure you have created a GKE cluster..."; \
+	bash ./bin/helm_node_exporter.sh; \
+	kubectl apply -f ./helm/cadvisor/cadvisor-daemonset.yaml; \
+	kubectl apply -f ./helm/cadvisor/cadvisor-service.yaml;
+
 # Main menu
 menu:
 	@echo "Please select the option:"; \
@@ -112,6 +120,7 @@ menu:
 	echo '6) Copy the elk_prom_graf_docker_compose folder to compute engine'; \
 	echo '7) Deploy filebeat pod to GKE'; \
 	echo '8) Create namespace and grant permission for GKE'; \
+	echo '9) Deploy Node Exporter and CAdvisor to GKE'; \
 	read -p 'Enter value: ' result; \
 	$(MAKE) --no-print-directory got-choice CHOICE="$$result";
 
@@ -132,6 +141,8 @@ got-choice:
 		source ./bin/helm_filebeat.sh; \
 	elif [ "$(CHOICE)" = "8" ]; then \
 		source ./bin/create_ns_grant_permission_gke.sh; \
+	elif [ "$(CHOICE)" = "9" ]; then \
+		$(MAKE) deploy_node_exporter_cadvisor; \
 	else \
 		echo "Invalid choice!"; \
 	fi

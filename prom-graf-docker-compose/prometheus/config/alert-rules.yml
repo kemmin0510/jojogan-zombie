@@ -20,3 +20,13 @@ groups:
     annotations:
       summary: High cpu usage
       description: Cpu consumption is at {{ humanize $value}}%
+
+- name: JoJoganZombieHighRPS
+  rules:
+  - alert: JoJoganZombieHighRPS
+    expr: sum(rate(jojogan_zombie_response_histogram_seconds_sum[1h])) / sum(rate(jojogan_zombie_response_histogram_seconds_count[1h])) > 20
+    for: 30s
+    labels:
+      severity: warning
+    annotations:
+      summary: RPS is too high
