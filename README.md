@@ -26,6 +26,10 @@ And we will integrate CI/CD to deploy the product on Google Kubernetes Engine (G
    - Just run `make setup`. It will make your life look easier.
 - You could find the training code [here](notebooks/experiments.ipynb)
 - We used the following technology:
+<details>
+   <summary>🛠 Techs</summary>
+
+   ###
    - Jupyter Notebook: EDA, Data Transformation and Modelling
    - [uv](https://docs.astral.sh/uv/): An extremely fast Python package and project manager
    - [MLFlow](https://mlflow.org/): open source MLOps Platform log the training results
@@ -42,6 +46,7 @@ And we will integrate CI/CD to deploy the product on Google Kubernetes Engine (G
    - [cAdvisor](https://github.com/google/cadvisor): Monitors container resource usage and performance, providing insights into CPU, memory, and network usage
    - [Grafana](https://grafana.com/): A visualization tool for creating real-time dashboards from metrics collected by Prometheus and other data sources
    - [Discord](https://discord.com/): Used for real-time notifications and alerts, integrating with monitoring tools to provide incident updates
+</details>
 
 ## 2. Training
 
