@@ -130,7 +130,7 @@ gcloud init
 cd ./ansible/deploy_jenkins
 ansible-playbook create_compute_instance.yaml
 ```
-- Wait for the compute enigine running. After that, you need to create the SSH connection from localhost to it. And copy the External IP to the file [inventory](./ansible/inventory)
+- Wait for the compute engine running. After that, you need to create the SSH connection from localhost to it. And copy the External IP to the file [inventory](./ansible/inventory)
 - Run the following code to install Docker and Jenkins on the compute engine:
 ```
 ansible-playbook deploy_jenkins.yaml -i ../inventory
@@ -204,7 +204,7 @@ To ensure comprehensive monitoring and logging, a second Google Compute Engine (
 ```
 ansible-playbook create_gce_elk.yaml
 ```
-- Wait for the compute enigine running. After that, you need to create the SSH connection from localhost to it. And copy the External IP to the file [inventory](./ansible/inventory)
+- Wait for the compute engine running. After that, you need to create the SSH connection from localhost to it. And copy the External IP to the file [inventory](./ansible/inventory)
 - Run the following code to install Docker and Jenkins on the compute engine:
 ```
 ansible-playbook install_docker.yaml -i ../inventory
