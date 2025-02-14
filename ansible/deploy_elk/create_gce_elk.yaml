@@ -5,7 +5,7 @@
       gcp_compute_instance:
         name: instance-2
         machine_type: e2-standard-4
-        zone: asia-southeast1-b
+        zone: us-central1-a
         project: jojogan-zombie
         auth_kind: serviceaccount
         service_account_file: ../secrets/jojogan-zombie-caa9aeaaf428.json

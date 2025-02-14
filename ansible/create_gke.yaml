@@ -5,7 +5,7 @@
       google.cloud.gcp_container_cluster:
         name: jojogan-zombie-cluster
         project: jojogan-zombie
-        location: asia-southeast1-b 
+        location: us-central1-a 
         initial_node_count: 1
         node_config:
           machine_type: e2-standard-4
@@ -20,7 +20,7 @@
         name: default-pool
         cluster: 
           name: jojogan-zombie-cluster
-        location: asia-southeast1-b
+        location: us-central1-a
         project: jojogan-zombie
         initial_node_count: 3
         config:
@@ -46,7 +46,7 @@
       google.cloud.gcp_container_cluster:
         name: jojogan-zombie-cluster
         project: jojogan-zombie
-        location: asia-southeast1-b
+        location: us-central1-a
         master_authorized_networks_config:
           enabled: true
           cidr_blocks:
