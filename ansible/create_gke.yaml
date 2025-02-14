@@ -1,0 +1,57 @@
+- name: Create GKE Cluster on Google Cloud
+  hosts: localhost
+  tasks:
+    - name: Create GKE Cluster
+      google.cloud.gcp_container_cluster:
+        name: jojogan-zombie-cluster
+        project: jojogan-zombie
+        location: us-central1-a 
+        initial_node_count: 1
+        node_config:
+          machine_type: e2-standard-4
+          disk_size_gb: 25
+        auth_kind: serviceaccount
+        service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
+        state: present
+      register: gke_cluster
+
+    - name: Create Node Pool with 3 Nodes
+      google.cloud.gcp_container_node_pool:
+        name: default-pool
+        cluster: 
+          name: jojogan-zombie-cluster
+        location: us-central1-a
+        project: jojogan-zombie
+        initial_node_count: 3
+        config:
+          machine_type: e2-standard-4
+          disk_size_gb: 25
+        auth_kind: serviceaccount
+        service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
+
+    - name: Open port 8000, 8099, 8080 and 9100 in firewall
+      google.cloud.gcp_compute_firewall:
+        name: allow-8000-8099-8080-9100
+        project: jojogan-zombie
+        allowed:
+          - ip_protocol: tcp
+            ports: ["8000", "8099", "8080", "9100"]
+        direction: INGRESS
+        source_ranges: ["0.0.0.0/0"]
+        target_tags: ["gke-cluster"]
+        auth_kind: serviceaccount
+        service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
+
+    - name: Enable External API Server Access
+      google.cloud.gcp_container_cluster:
+        name: jojogan-zombie-cluster
+        project: jojogan-zombie
+        location: us-central1-a
+        master_authorized_networks_config:
+          enabled: true
+          cidr_blocks:
+            - cidr_block: "0.0.0.0/0"
+              display_name: "Allow All"
+        auth_kind: serviceaccount
+        service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
+      when: gke_cluster is changed

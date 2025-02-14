@@ -1,0 +1,44 @@
+- name: Create a Compute Engine instance
+  hosts: localhost
+  tasks:
+    - name: Create a Compute Engine instance
+      gcp_compute_instance:
+        name: instance-2
+        machine_type: e2-standard-4
+        zone: us-central1-a
+        project: jojogan-zombie
+        auth_kind: serviceaccount
+        service_account_file: ../secrets/jojogan-zombie-caa9aeaaf428.json
+        state: present # Change to present to create the instance 
+        disks:
+          - auto_delete: true
+            boot: true
+            initialize_params:
+              source_image: projects/ubuntu-os-cloud/global/images/ubuntu-2204-jammy-v20230727
+              disk_size_gb: 20
+        network_interfaces:
+          - network:
+              selfLink: global/networks/default
+            access_configs:
+              - name: External NAT
+                type: ONE_TO_ONE_NAT
+
+    - name: Create inbound firewall rule for port 9200, 5601, 9090 and 3000
+      gcp_compute_firewall:
+            name: allow-port-9200-5601-3000-9090
+            network:
+              selfLink: global/networks/default
+            allowed:
+              - ip_protocol: TCP
+                ports:
+                  - 9200
+                  - 5601
+                  - 3000
+                  - 9090
+            source_ranges:
+              - 0.0.0.0/0 # Allow traffic from any source (use a more specific source range for security)
+            direction: INGRESS # Direction from outside to inside, EGRESS is the opposite direction
+            description: 9200 Elasticsearch, 5601 Kibana, 3000 Grafana, 9090 Prometheus
+            project: jojogan-zombie
+            auth_kind: serviceaccount
+            service_account_file: ../secrets/jojogan-zombie-caa9aeaaf428.json
