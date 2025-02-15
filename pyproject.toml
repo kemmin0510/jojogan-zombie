@@ -1,0 +1,100 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jojogan_zombie"
+version = "0.1.0"
+description = "Project guides you to apply One Shot Stylization with JoJoGan"
+authors = [
+  {name = "Minh Huu Khoa Nguyen", email = "khoaminh.energy@gmail.com"}
+]
+maintainers = [
+  {name = "Minh Huu Khoa Nguyen", email = "khoaminh.energy@gmail.com"}
+]
+classifiers = [
+
+]
+license = {text = "MIT license"}
+dependencies = [
+  "dlib>=19.24.6",
+  "fastapi[standard]>=0.115.8",
+  "gdown>=5.2.0",
+  "loguru>=0.7.3",
+  "matplotlib>=3.9.4",
+  "numpy>=2.0.2",
+  "opencv-python>=4.11.0.86",
+  "opentelemetry-exporter-jaeger>=1.21.0",
+  "opentelemetry-exporter-otlp>=1.30.0",
+  "opentelemetry-exporter-otlp-proto-grpc>=1.30.0",
+  "opentelemetry-exporter-prometheus>=0.51b0",
+  "opentelemetry-instrumentation-fastapi>=0.51b0",
+  "opentelemetry-instrumentation-logging>=0.51b0",
+  "opentelemetry-instrumentation-requests>=0.51b0",
+  "opentelemetry-sdk>=1.30.0",
+  "opentelemetry-util-http>=0.51b0",
+  "prometheus-client>=0.21.1",
+  "scipy>=1.13.1",
+]
+
+[project.optional-dependencies]
+dev = [
+    "coverage",  # testing
+    "mypy",  # linting
+    "pytest",  # testing
+    "ruff"  # linting
+]
+
+[project.urls]
+
+bugs = "https://github.com/kemmin0510/jojogan_zombie/issues"
+changelog = "https://github.com/kemmin0510/jojogan_zombie/blob/master/changelog.md"
+homepage = "https://github.com/kemmin0510/jojogan_zombie"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.package-data]
+"*" = ["*.*"]
+
+
+
+
+# Mypy
+# ----
+
+[tool.mypy]
+files = "."
+
+# Use strict defaults
+strict = true
+warn_unreachable = true
+warn_no_return = true
+
+[[tool.mypy.overrides]]
+# Don't require test functions to include types
+module = "tests.*"
+allow_untyped_defs = true
+disable_error_code = "attr-defined"
+
+[tool.uv.workspace]
+members = ["monitoring"]
+
+[dependency-groups]
+dev = [
+    "ansible>=8.7.0",
+    "boto3>=1.36.14",
+    "dlib>=19.24.6",
+    "gdown>=5.2.0",
+    "jupyter>=1.1.1",
+    "locust>=2.32.8",
+    "lpips>=0.1.4",
+    "mlflow>=2.20.1",
+    "opencv-python>=4.11.0.86",
+    "pytest>=8.3.4",
+    "python-dotenv>=1.0.1",
+    "scikit-learn>=1.6.1",
+    "scipy>=1.13.1",
+    "tqdm>=4.67.1",
+]
+

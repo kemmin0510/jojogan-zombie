@@ -57,7 +57,7 @@ And we will integrate CI/CD to deploy the product on Google Kubernetes Engine (G
       - Install the [Ninja linux package](https://ninja-build.org/)
       - Download [68 Shape Predictor DLIB Model](http://dlib.net/files/shape_predictor_68_face_landmarks.dat.bz2) and extract it to [models](models/) folder
 - Watch the following diagram to understand the structure of training process:
-   ![localhost](./static/localhost.png)
+   ![localhost](./images/localhost.png)
    
 <details>
    <summary>📌 Roles of Components</summary>
@@ -85,11 +85,11 @@ And we will integrate CI/CD to deploy the product on Google Kubernetes Engine (G
 
 - We have fine-tuned the hyperparameters to find the best `Style2Gan` model
 - The training experiments are logged by MLFlow
-![mlflow results](./static/mlflow_results.png)
+![mlflow results](./images/mlflow_results.png)
 - You could compare the results (such as loss, metrics, parameters,...) through MLFLow
-![compare results](./static/compare_results.png)
+![compare results](./images/compare_results.png)
 - MLFlow also log the artifact, which are the S3 objects such as the training model and testing results
-![test](./static/test.png)
+![test](./images/test.png)
 
 ## 3. CI/CD Pipeline
 ### 3.1 CI/CD Overview
@@ -102,7 +102,7 @@ In this project, we integrate GitHub and Jenkins to automate the CI/CD process.
 - Docker is used to package the application, create a Docker image, and push it to Docker Hub.
 - Helm is utilized to deploy the application to Google Kubernetes Engine (GKE).
 
-![cicd](./static/ci-cd.png)
+![cicd](./images/ci-cd.png)
 
 📝 When a change is pushed to the repository (commit, pull request), Jenkins automatically triggers the pipeline
    - Pytest runs automated tests to verify code correctness.
@@ -127,7 +127,7 @@ gcloud init
 - The service account key file (with a .json extension) is stored in the directory: `/ansible/secrets/`
 - Follow these steps:
 ```
-cd ./ansible/deploy_jenkins
+cd ./infra/ansible/deploy_jenkins
 ansible-playbook create_compute_instance.yaml
 ```
 - Wait for the compute engine running. After that, you need to create the SSH connection from localhost to it. And copy the External IP to the file [inventory](./ansible/inventory)
@@ -141,7 +141,7 @@ ansible-playbook deploy_jenkins.yaml -i ../inventory
 
 ## 4. High-level architecture
 
-![architecture](./static/jojogan-zombie-architecture.drawio.png)
+![architecture](./images/jojogan-zombie-architecture.drawio.png)
 
 When deploying the application to the cluster using Helm, the following components are set up:
 
@@ -159,7 +159,7 @@ When deploying the application to the cluster using Helm, the following componen
 This setup ensures that the application is accessible, system and container metrics are collected, and logs are properly forwarded for monitoring and analysis.
 ### 4.2. Deployment Guide
 #### 4.2.1 Create Google Kubernetes Engine
-- Go to the folder `/ansible`, you need to run the following code:
+- Go to the folder `./infra/ansible`, you need to run the following code:
 ```
 ansible-playbook create_gke.yaml
 ```
@@ -200,11 +200,11 @@ To ensure comprehensive monitoring and logging, a second Google Compute Engine (
 
 ### 4.4. Observability Guide
 
-- Go to the folder `/ansible/deploy_elk`, you need to run the following code:
+- Go to the folder `./infra/ansible/deploy_elk`, you need to run the following code:
 ```
 ansible-playbook create_gce_elk.yaml
 ```
-- Wait for the compute engine running. After that, you need to create the SSH connection from localhost to it. And copy the External IP to the file [inventory](./ansible/inventory)
+- Wait for the compute engine running. After that, you need to create the SSH connection from localhost to it. And copy the External IP to the file [inventory](./infra/ansible/inventory)
 - Run the following code to install Docker and Jenkins on the compute engine:
 ```
 ansible-playbook install_docker.yaml -i ../inventory
@@ -223,21 +223,21 @@ This setup ensures end-to-end observability by enabling real-time monitoring, al
 ## 5. Results
 
 - Go to the `<EXTERNAL IP>:8000`. The `<EXTERNAL IP>` is the IP of load balancer for app in GKE:
-![fastapi](./static/fastapi.png) 
+![fastapi](./images/fastapi.png) 
 - Try making user request, you will receive images like this:
-![fastapi_results](./static/fast_results.png)
+![fastapi_results](./images/fast_results.png)
 - Go to the `<EXTERNAL IP ELK PROM GRAF>:5601`. The `<EXTERNAL IP ELK PROM GRAF>` here is the IP of the second computer engine and 5601 is the exposed port for Kibana:
-![log](./static/log.png)
+![log](./images/log.png)
 - Go to the `<EXTERNAL IP ELK PROM GRAF:9090>`. 9090 is the exposed port for prometheus. You can query the necessary metrics like the RPS in the latest 1 hour
-![rps](./static/rps.png)
+![rps](./images/rps.png)
 - Go to the `<EXTERNAL IP ELK PROM GRAF:3000>`. 3000 is the exposed port for grafana. You can create, edit, query, and do everything about dashboard and metrics. The system metrics will be displayed like following picture:
-![graphana](./static/grafana.png)
+![graphana](./images/grafana.png)
 - You can also create dashboard about the custom metrics
-![custom](./static/custom.png)
+![custom](./images/custom.png)
 - Finally, when there is an alert, we will notice by the event triggered in prometheus
-![warning](./static/warning_alerts.png)
+![warning](./images/warning_alerts.png)
 - It will fire a message in discord channel
-![discord](./static/captain_hook.png)
+![discord](./images/captain_hook.png)
 
 ## Acknowledgements
 
