@@ -77,6 +77,9 @@ module = "tests.*"
 allow_untyped_defs = true
 disable_error_code = "attr-defined"
 
+[tool.uv.workspace]
+members = ["monitoring"]
+
 [dependency-groups]
 dev = [
     "ansible>=8.7.0",
