@@ -98,8 +98,8 @@ build_deploy_local:
 copy_elk_prom_graf_docker_compose:
 	@echo "Please make sure your localhost is connected to the compute engine via SSH..."; \
 	read -p 'Enter GCP External IP: ' GCE_EXTERNAL_IP; \
-	scp -i ~/.ssh/id_rsa -r elk-docker-compose minhnhk@$$GCE_EXTERNAL_IP:/home/minhnhk; \
-	scp -i ~/.ssh/id_rsa -r prom-graf-docker-compose minhnhk@$$GCE_EXTERNAL_IP:/home/minhnhk;
+	scp -i ~/.ssh/id_rsa -r ./monitoring/cloud/elk-docker-compose minhnhk@$$GCE_EXTERNAL_IP:/home/minhnhk; \
+	scp -i ~/.ssh/id_rsa -r ./monitoring/cloud/prom-graf-docker-compose minhnhk@$$GCE_EXTERNAL_IP:/home/minhnhk;
 
 # Deploy Node Exporter and CAdvisor to GKE
 deploy_node_exporter_cadvisor:

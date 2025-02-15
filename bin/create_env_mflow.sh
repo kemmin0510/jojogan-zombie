@@ -7,13 +7,13 @@ input_variable() {
 
     if [ -z "${!var_name}" ]; then
         read -p "Enter $var_name: " var_value
-        echo "$var_name=$var_value" >> ./mlflow-docker-compose/.env
+        echo "$var_name=$var_value" >> ./monitoring/local/mlflow-docker-compose/.env
     fi
 }
 
 # Delete the .env file if it exists
-if [ -f ./mlflow-docker-compose/.env ]; then
-    rm ./mlflow-docker-compose/.env
+if [ -f ./monitoring/local/mlflow-docker-compose/.env ]; then
+    rm ./monitoring/local/mlflow-docker-compose/.env
 fi
 
 # List of input variables
