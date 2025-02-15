@@ -141,9 +141,7 @@ ansible-playbook deploy_jenkins.yaml -i ../inventory
 
 ## 4. High-level architecture
 
-![architecture](./images/jojogan-zombie-architecture.drawio.png)
-
-When deploying the application to the cluster using Helm, the following components are set up:
+![architecture](./images/architecture.png)
 
 ### 4.1. Deployment Overview
 #### 4.1.1 Application Deployment:
