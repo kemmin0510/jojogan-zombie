@@ -121,3 +121,6 @@ test/locustfile.py
 
 # Secret key
 */secrets
+
+# mlruns folder
+mlruns/

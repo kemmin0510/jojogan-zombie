@@ -81,20 +81,20 @@ app = FastAPI()
 latent_dim = 512
 
 # Set device
-device = 'cpu' # cuda or cpu
+DEVICE = 'cpu' # cuda or cpu
 
 # Set model path
 stylegan2_path = "./models/stylegan2-ffhq-config-f.pt"
 zombie_path = "./models/zombie.pt"
 
 # Load the original generator
-generator = Generator(1024, latent_dim, 8, 2).to(device)
+generator = Generator(1024, latent_dim, 8, 2).to(DEVICE)
 ckpt = torch.load(stylegan2_path, map_location=lambda storage, loc: storage)
 generator.load_state_dict(ckpt["g_ema"], strict=False)
 mean_latent = generator.mean_latent(10000)
 
 # Load the finetured parameters
-generator.load_state_dict(torch.load(zombie_path, map_location=device))
+generator.load_state_dict(torch.load(zombie_path, map_location=DEVICE))
 
 # Set the generator to evaluation mode
 @app.post("/uploadfile/") # Post method
@@ -114,7 +114,7 @@ async def upload_file(file: UploadFile = File()):
     aligned_face = align_face(temp_filename)
 
     # Project the aligned face to latent space
-    my_w = e4e_projection(img=aligned_face, device=device).unsqueeze(0)
+    my_w = e4e_projection(img=aligned_face, device=DEVICE).unsqueeze(0)
 
     # Generatre the image
     with torch.no_grad():

@@ -1,26 +1,20 @@
 pipeline {
     agent any
-
     options{
         // Max number of build logs to keep and days to keep
         buildDiscarder(logRotator(numToKeepStr: '5', daysToKeepStr: '5'))
         // Enable timestamp at each job in the pipeline
         timestamps()
     }
-
     environment{
-
         // Set the github credentials
         github_branch = 'master'
         github_url = 'https://github.com/kemmin0510/jojogan-zombie.git'
-
         // Set the dockerhub credentials
         registry = 'minhnhk/jojogan-zombie'
         registryCredential = 'dockerhub'      
     }
-
     stages {
-
         // Setup stage
         stage('Setup') {
             steps {
@@ -29,7 +23,6 @@ pipeline {
                 sh './bin/build_deploy_local.sh 8000'
             }
         }
-
         // Check container
         stage('Check') {
             steps {
@@ -40,7 +33,6 @@ pipeline {
 
         // Test stage. Pytest is used to test the unit tests
         stage('Test') {
-
             agent {
                 docker {
                     image 'python:3.9.21-slim'
@@ -51,9 +43,8 @@ pipeline {
                 echo 'Testing model correctness..'
                 sh 'apt-get update'
                 sh 'apt-get install -y curl'
-                sh 'pip install pytest requests'
+                sh 'pip install pytest==8.3.4 requests==2.32.3'
                 sh 'pytest'
-
                 // echo 'Entering test container...'
                 // sh 'echo "Container is running. Use docker exec -it $(docker ps -lq) /bin/bash to enter."' 
                 // sh 'tail -f /dev/null'
@@ -73,9 +64,7 @@ pipeline {
                 }
             }
         }
-        
         stage('Deploy') {
-
             agent {
                 kubernetes {
                     containerTemplate {
