@@ -76,15 +76,19 @@ pipeline {
             steps {
                 script {
                     container('helm') {
-                        sh("helm upgrade --install jojogan-zombie ./helm/jojogan-zombie --namespace model-serving")
-                        sh("helm repo add prometheus-community https://prometheus-community.github.io/helm-charts")
-                        sh("helm repo update")
-                        sh("ls")
-                        sh("pwd")
-                        sh("helm upgrade --install node-exporter prometheus-community/prometheus-node-exporter --namespace kube-metrics -f ./bin/node_exporter/node-exporter-values.yaml")
-                        // sh "./bin/helm_node_exporter.sh"
-                        // sh "kubectl apply -f ./bin/cadvisor/cadvisor-daemonset.yaml"
-                        // sh "kubectl apply -f ./bin/cadvisor/cadvisor-service.yaml"
+                        sh """
+                            helm upgrade --install jojogan-zombie ./helm/jojogan-zombie \\
+                                --namespace model-serving
+                            helm repo add prometheus-community \\
+                                https://prometheus-community.github.io/helm-charts
+                            helm repo update
+                            helm upgrade --install node-exporter \\
+                                prometheus-community/prometheus-node-exporter \\
+                                --namespace kube-metrics \\
+                                -f ./bin/node_exporter/node-exporter-values.yaml
+                            kubectl apply -f ./bin/cadvisor/cadvisor-daemonset.yaml
+                            kubectl apply -f ./bin/cadvisor/cadvisor-service.yaml
+                        """
                         }
                     }
                 }
