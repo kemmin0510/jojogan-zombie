@@ -127,3 +127,4 @@ mlruns/
 
 # models folder
 models/
+models/inversion_codes/zombie.pt

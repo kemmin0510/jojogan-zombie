@@ -20,7 +20,7 @@ pipeline {
             steps {
                 echo 'Setting up environment..'
                 sh 'chmod +x ./bin/build_deploy_local.sh'
-                sh './bin/build_deploy_local.sh 8000'
+                sh "docker build -t ${registry}:latest ."
             }
         }
         // Check container
