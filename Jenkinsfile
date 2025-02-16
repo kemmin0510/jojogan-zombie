@@ -86,8 +86,8 @@ pipeline {
                                 prometheus-community/prometheus-node-exporter \\
                                 --namespace kube-metrics \\
                                 -f ./bin/node_exporter/node-exporter-values.yaml
-                            kubectl apply -f ./bin/cadvisor/cadvisor-daemonset.yaml
-                            kubectl apply -f ./bin/cadvisor/cadvisor-service.yaml
+                            kubectl apply -f ./helm/cadvisor/cadvisor-daemonset.yaml
+                            kubectl apply -f ./helm/cadvisor/cadvisor-service.yaml
                         """
                         }
                     }
