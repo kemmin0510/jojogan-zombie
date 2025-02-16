@@ -11,7 +11,7 @@
           machine_type: e2-standard-4
           disk_size_gb: 25
         auth_kind: serviceaccount
-        service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
+        service_account_file: ./secrets/jojogan-zombie-d30e04a80405.json
         state: present
       register: gke_cluster
 
@@ -27,7 +27,7 @@
           machine_type: e2-standard-4
           disk_size_gb: 25
         auth_kind: serviceaccount
-        service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
+        service_account_file: ./secrets/jojogan-zombie-d30e04a80405.json
 
     - name: Open port 8000, 8099, 8080 and 9100 in firewall
       google.cloud.gcp_compute_firewall:
@@ -40,7 +40,7 @@
         source_ranges: ["0.0.0.0/0"]
         target_tags: ["gke-cluster"]
         auth_kind: serviceaccount
-        service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
+        service_account_file: ./secrets/jojogan-zombie-d30e04a80405.json
 
     - name: Enable External API Server Access
       google.cloud.gcp_container_cluster:
@@ -53,5 +53,5 @@
             - cidr_block: "0.0.0.0/0"
               display_name: "Allow All"
         auth_kind: serviceaccount
-        service_account_file: ./secrets/jojogan-zombie-caa9aeaaf428.json
+        service_account_file: ./secrets/jojogan-zombie-d30e04a80405.json
       when: gke_cluster is changed
