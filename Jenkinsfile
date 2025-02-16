@@ -23,16 +23,7 @@ pipeline {
                 sh "docker build -t ${registry}:latest ."
             }
         }
-        // Check container
-        stage('Check') {
-            steps {
-                echo 'Checking container..'
-                sh 'docker ps'
-                echo 'Removing container..'
-                sh 'docker rm -f test'
-            }
-        }
-
+        
         // Test stage. Pytest is used to test the unit tests
         stage('Test') {
             agent {
