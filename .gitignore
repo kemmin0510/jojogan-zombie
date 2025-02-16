@@ -120,7 +120,7 @@ test/locustfile.py
 # !models/.gitkeep
 
 # Secret key
-*/secrets
+infra/ansible/secrets
 
 # mlruns folder
 mlruns/

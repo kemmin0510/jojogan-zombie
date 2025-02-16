@@ -8,7 +8,7 @@
         zone: us-central1-a
         project: jojogan-zombie
         auth_kind: serviceaccount
-        service_account_file: ../secrets/jojogan-zombie-caa9aeaaf428.json
+        service_account_file: ../secrets/jojogan-zombie-d30e04a80405.json
         state: present # Change to present to create the instance 
         disks:
           - auto_delete: true
@@ -41,4 +41,4 @@
             description: 9200 Elasticsearch, 5601 Kibana, 3000 Grafana, 9090 Prometheus
             project: jojogan-zombie
             auth_kind: serviceaccount
-            service_account_file: ../secrets/jojogan-zombie-caa9aeaaf428.json
+            service_account_file: ../secrets/jojogan-zombie-d30e04a80405.json
