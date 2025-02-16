@@ -124,3 +124,6 @@ test/locustfile.py
 
 # mlruns folder
 mlruns/
+
+# models folder
+models/

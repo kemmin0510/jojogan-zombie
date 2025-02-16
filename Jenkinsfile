@@ -28,6 +28,8 @@ pipeline {
             steps {
                 echo 'Checking container..'
                 sh 'docker ps'
+                echo 'Removing container..'
+                sh 'docker rm -f test'
             }
         }
 
@@ -43,8 +45,8 @@ pipeline {
                 echo 'Testing model correctness..'
                 sh 'apt-get update'
                 sh 'apt-get install -y curl'
-                sh 'pip install pytest==8.3.4 requests==2.32.3'
-                sh 'pytest'
+                sh 'pip install pytest==8.3.4 requests==2.32.3 pytest-cov==8.3.4'
+                sh 'pytest --cov=myproj test'
                 // echo 'Entering test container...'
                 // sh 'echo "Container is running. Use docker exec -it $(docker ps -lq) /bin/bash to enter."' 
                 // sh 'tail -f /dev/null'

@@ -135,3 +135,4 @@ async def upload_file(file: UploadFile = File()):
     buf.seek(0)
 
     return StreamingResponse(buf, media_type="image/png")
+

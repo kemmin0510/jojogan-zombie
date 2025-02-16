@@ -1,7 +1,9 @@
-import requests
-import os
+from fastapi.testclient import TestClient
+from app.main import app
 
-API_URL = f'http://test:8000/uploadfile/'
+API_URL = f'http://localhost:8000/uploadfile/'
+
+client = TestClient(app)
 
 def test_post():
     
@@ -10,7 +12,7 @@ def test_post():
         files = {"file": ("test_image.jpg", img_file, "image/jpeg")}
         
         # Send a POST request to the API
-        response = requests.post(API_URL, files=files)
+        response = client.post(API_URL, files=files)
         
         # Status code 200 or not
         assert response.status_code == 200, f"Unexpected status code: {response.status_code}"
