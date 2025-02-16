@@ -23,12 +23,12 @@ pipeline {
                 sh "docker build -t ${registry}:latest ."
             }
         }
-        
+
         // Test stage. Pytest is used to test the unit tests
         stage('Test') {
             agent {
                 docker {
-                    image "${resistry}:latest"
+                    image "minhnhk/jojogan-zombie:latest"
                 }
             }
             steps {
