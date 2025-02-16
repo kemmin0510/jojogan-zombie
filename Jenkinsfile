@@ -37,14 +37,12 @@ pipeline {
         stage('Test') {
             agent {
                 docker {
-                    image 'python:3.9.21-slim'
-                    args '-v /root/.cache/pip:/root/.cache/pip --network jenkins_network'
+                    image "${resistry}:latest"
                 }
             }
             steps {
                 echo 'Testing model correctness..'
                 sh 'apt-get update'
-                sh 'apt-get install -y curl'
                 sh 'pip install pytest==8.3.4 requests==2.32.3 pytest-cov==6.0.0'
                 sh 'pytest --cov=app'
                 // echo 'Entering test container...'
