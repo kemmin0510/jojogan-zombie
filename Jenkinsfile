@@ -35,6 +35,14 @@ pipeline {
                 echo 'Testing model correctness..'
                 sh 'apt-get update'
                 sh 'pip install pytest==8.3.4 requests==2.32.3 pytest-cov==6.0.0'
+                script {
+                    def containerId = sh(script: "docker ps -q --filter ancestor=minhnhk/jojogan-zombie:latest", returnStdout: true).trim()
+                    if (containerId) {
+                        sh "docker cp ${containerId}:/app/models ./models"
+                    } else {
+                        error("Not found any container running from image minhnhk/jojogan-zombie:latest")
+                    }
+                }
                 sh 'pytest --cov=app'
                 // echo 'Entering test container...'
                 // sh 'echo "Container is running. Use docker exec -it $(docker ps -lq) /bin/bash to enter."' 
