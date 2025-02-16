@@ -34,7 +34,7 @@ pipeline {
             steps {
                 echo 'Testing model correctness..'
                 sh 'apt-get update'
-                sh 'pip install pytest==8.3.4 requests==2.32.3 pytest-cov==6.0.0'
+                sh 'pip install pytest==8.3.4 requests==2.32.3 pytest-cov==6.0.0 locust==2.20.1'
                 script {
                     def containerId = sh(script: "docker ps -q --filter ancestor=minhnhk/jojogan-zombie:latest", returnStdout: true).trim()
                     if (containerId) {
@@ -43,7 +43,14 @@ pipeline {
                         error("Not found any container running from image minhnhk/jojogan-zombie:latest")
                     }
                 }
+
+                // Unit testing with pytest. The coverage is calculated
                 sh 'pytest --cov=app'
+
+                // Load testing with locust
+                sh 'locust -f ./tests/locustfile.py --headless -u 10 -r 2 -t 1m \\
+                    --csv=./tests/locust_results --host http://localhost:8000'
+
                 // echo 'Entering test container...'
                 // sh 'echo "Container is running. Use docker exec -it $(docker ps -lq) /bin/bash to enter."' 
                 // sh 'tail -f /dev/null'
