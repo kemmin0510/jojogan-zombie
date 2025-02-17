@@ -51,8 +51,8 @@ pipeline {
         stage('Load Test') {
             steps {
                 echo 'Load Testing ..'
-                sh 'apt-get update'
-                sh 'pip install locust==2.20.1'
+                sh 'apt-get update && apt-get install -y pipx'
+                sh 'pipx install locust==2.20.1'
 
                 // Start the container
                 sh """
