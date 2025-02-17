@@ -59,13 +59,15 @@ pipeline {
                 docker {
                     image "minhnhk/jojogan-zombie:latest"
                     args "--name test"
-                    command "uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1"
                 }
             }
             steps {
                 echo 'Load Testing ..'
                 sh 'apt-get update'
                 sh 'pip install locust==2.20.1'
+
+                // Run uvicorn server
+                sh "uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1"
 
                 // Load testing with locust
                 sh 'locust -f ./tests/locustfile.py --headless -u 10 -r 2 -t 1m --csv=./tests/locust_results --host http://localhost:8000'
