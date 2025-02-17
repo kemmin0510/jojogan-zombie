@@ -61,6 +61,8 @@ pipeline {
                 """
 
                 // Load testing with locust
+                sh 'ls -l ./tests'
+
                sh "docker run --rm --network host -v ./tests:/mnt/tests -v ./data/src:/data/src locustio/locust:2.20.1 \
                     -f /mnt/tests/locustfile.py --headless -u 10 -r 2 -t 1m --csv=/mnt/tests/locust_results --host http://localhost:8000"
 
