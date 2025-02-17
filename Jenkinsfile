@@ -38,6 +38,8 @@ pipeline {
                 sh 'rm -rf /app/models'
                 script {
                     def containerId = sh(script: "docker ps -q --filter ancestor=minhnhk/jojogan-zombie:latest", returnStdout: true).trim()
+                    echo "Container ID: ${containerId}"
+                    docker ps
                     if (containerId) {
                         sh "docker cp '${containerId}:/app/models ./models'"
                     } else {
