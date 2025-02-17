@@ -47,27 +47,6 @@ pipeline {
                 // sh 'tail -f /dev/null'
             }
         }
-
-        stage('Load Test') {
-            steps {
-                echo 'Load Testing ..'
-
-                // Start the container
-                sh """
-                docker run -d --name test \
-                    -p 8000:8000 --network host \
-                    minhnhk/jojogan-zombie:latest \
-                    uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1
-                """
-
-                // Load testing with locust
-                sh 'ls -l ./tests'
-
-               sh "docker run --rm --network host -v ./tests:/mnt/tests -v ./data/src:/data/src locustio/locust:2.20.1 \
-                    -f /mnt/tests/locustfile.py --headless -u 10 -r 2 -t 1m --csv=/mnt/tests/locust_results --host http://localhost:8000"
-
-            }
-        }
         
         stage('Build') {
             steps {
