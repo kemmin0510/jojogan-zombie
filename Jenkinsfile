@@ -42,6 +42,9 @@ pipeline {
                 // Unit testing with pytest. The coverage is calculated
                 sh 'pytest --cov=app'
 
+                sh "docker rm -f test"
+                sh "docker run -d --name test -p 8000:8000 ${registry}:latest uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1"
+
                 // Load testing with locust
                 sh 'locust -f ./tests/locustfile.py --headless -u 10 -r 2 -t 1m --csv=./tests/locust_results --host http://localhost:8000'
 
