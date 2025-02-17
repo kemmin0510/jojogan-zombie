@@ -1,4 +1,5 @@
 from locust import HttpUser, task, between, constant
+import os
 
 class UploadUser(HttpUser):
     wait_time = between(6, 10)  # Random interval between requests
@@ -6,7 +7,8 @@ class UploadUser(HttpUser):
 
     @task
     def upload_image(self):
-        file_path = "./data/src/iu.jpeg"  
+        file_path = "./data/src/iu.jpeg"
+        print(os.path.exists(file_path))
         with open(file_path, "rb") as file:
             files = {"file": (file_path, file, "image/jpeg")}
             response = self.client.post("/uploadfile/", files=files, name="uploadfile")
