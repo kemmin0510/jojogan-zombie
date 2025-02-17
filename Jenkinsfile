@@ -35,6 +35,7 @@ pipeline {
                 echo 'Testing model correctness..'
                 sh 'apt-get update'
                 sh 'pip install pytest==8.3.4 requests==2.32.3 pytest-cov==6.0.0 locust==2.20.1'
+                sh 'rm -rf /app/models'
                 script {
                     def containerId = sh(script: "docker ps -q --filter ancestor=minhnhk/jojogan-zombie:latest", returnStdout: true).trim()
                     if (containerId) {
