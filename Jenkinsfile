@@ -63,7 +63,7 @@ pipeline {
                 """
 
                 // Load testing with locust
-                sh 'locust -f ./tests/locustfile.py --headless -u 10 -r 2 -t 1m --csv=./tests/locust_results --host http://localhost:8000'
+                sh 'pipx run locust -f ./tests/locustfile.py --headless -u 10 -r 2 -t 1m --csv=./tests/locust_results --host http://localhost:8000'
             }
         }
         
