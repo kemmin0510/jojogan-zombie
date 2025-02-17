@@ -39,7 +39,6 @@ pipeline {
                 script {
                     def containerId = sh(script: "docker ps -q --filter ancestor=minhnhk/jojogan-zombie:latest | tail -n 1", returnStdout: true).trim()
                     echo "Container ID: ${containerId}"
-                    docker ps
                     if (containerId) {
                         sh "docker cp '${containerId}:/app/models ./models'"
                     } else {
