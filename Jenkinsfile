@@ -37,7 +37,7 @@ pipeline {
                 sh 'pip install pytest==8.3.4 requests==2.32.3 pytest-cov==6.0.0 locust==2.20.1'
                 sh 'rm -rf /app/models'
                 script {
-                    def containerId = sh(script: "docker ps -q --filter ancestor=minhnhk/jojogan-zombie:latest", returnStdout: true).trim()
+                    def containerId = sh(script: "docker ps -q --filter ancestor=minhnhk/jojogan-zombie:latest | tail -n 1", returnStdout: true).trim()
                     echo "Container ID: ${containerId}"
                     docker ps
                     if (containerId) {
