@@ -39,7 +39,7 @@ pipeline {
                 script {
                     def containerId = sh(script: "docker ps -q --filter ancestor=minhnhk/jojogan-zombie:latest", returnStdout: true).trim()
                     if (containerId) {
-                        sh "docker cp '${containerId}:/app/models' './models'"
+                        sh "docker cp '${containerId}:/app/models ./models'"
                     } else {
                         error("Not found any container running from image minhnhk/jojogan-zombie:latest")
                     }
