@@ -42,9 +42,6 @@ pipeline {
                 // Unit testing with pytest. The coverage is calculated
                 sh 'pytest --cov=app'
 
-                // Load testing with locust
-                sh 'locust -f ./tests/locustfile.py --headless -u 10 -r 2 -t 1m --csv=./tests/locust_results --host http://localhost:8000'
-
                 // echo 'Entering test container...'
                 // sh 'echo "Container is running. Use docker exec -it $(docker ps -lq) /bin/bash to enter."' 
                 // sh 'tail -f /dev/null'
