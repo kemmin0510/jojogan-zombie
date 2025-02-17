@@ -8,7 +8,6 @@ class UploadUser(HttpUser):
     @task
     def upload_image(self):
         file_path = "./data/src/iu.jpeg"
-        print(os.path.exists(file_path))
         with open(file_path, "rb") as file:
             files = {"file": (file_path, file, "image/jpeg")}
             response = self.client.post("/uploadfile/", files=files, name="uploadfile")
