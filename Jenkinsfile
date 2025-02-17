@@ -42,9 +42,6 @@ pipeline {
                 // Unit testing with pytest. The coverage is calculated
                 sh 'pytest --cov=app'
 
-                sh "docker rm -f test"
-                sh "docker run -d --name test -p 8000:8000 ${registry}:latest uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1"
-
                 // Load testing with locust
                 sh 'locust -f ./tests/locustfile.py --headless -u 10 -r 2 -t 1m --csv=./tests/locust_results --host http://localhost:8000'
 
@@ -55,19 +52,18 @@ pipeline {
         }
 
         stage('Load Test') {
-            agent {
-                docker {
-                    image "minhnhk/jojogan-zombie:latest"
-                    args "--name test"
-                }
-            }
             steps {
                 echo 'Load Testing ..'
                 sh 'apt-get update'
                 sh 'pip install locust==2.20.1'
 
-                // Run uvicorn server
-                sh "uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1"
+                // Start the container
+                sh """
+                docker run -d --name test \
+                    -p 8000:8000 \
+                    minhnhk/jojogan-zombie:latest \
+                    uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1
+                """
 
                 // Load testing with locust
                 sh 'locust -f ./tests/locustfile.py --headless -u 10 -r 2 -t 1m --csv=./tests/locust_results --host http://localhost:8000'
