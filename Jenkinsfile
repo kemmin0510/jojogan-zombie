@@ -74,6 +74,7 @@ pipeline {
             steps {
                 script {
                     container('helm') {
+                        // Deploy the model-serving and kube-metrics namespace
                         sh """
                             helm upgrade --install jojogan-zombie ./helm/jojogan-zombie \\
                                 --namespace model-serving
