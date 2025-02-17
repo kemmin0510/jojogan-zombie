@@ -21,6 +21,7 @@ pipeline {
                 echo 'Setting up environment..'
                 sh 'chmod +x ./bin/build_deploy_local.sh'
                 sh "docker build -t ${registry}:latest ."
+                sh "docker ps -aq -f name=test | xargs -r docker rm -f"
             }
         }
 
@@ -29,6 +30,7 @@ pipeline {
             agent {
                 docker {
                     image "minhnhk/jojogan-zombie:latest"
+                    args "--name test"
                 }
             }
             steps {
@@ -36,15 +38,7 @@ pipeline {
                 sh 'apt-get update'
                 sh 'pip install pytest==8.3.4 requests==2.32.3 pytest-cov==6.0.0 locust==2.20.1'
                 sh 'rm -rf /app/models'
-                script {
-                    def containerId = sh(script: "docker ps -q --filter ancestor=minhnhk/jojogan-zombie:latest | tail -n 1", returnStdout: true).trim()
-                    sh "echo -n '${containerId}' | od -c"
-                    if (containerId) {
-                        sh "docker cp 236606cc34a8:/app/models ./models'"
-                    } else {
-                        error("Not found any container running from image minhnhk/jojogan-zombie:latest")
-                    }
-                }
+                sh 'docker cp test:/app/models ./models'
 
                 // Unit testing with pytest. The coverage is calculated
                 sh 'pytest --cov=app'
