@@ -57,7 +57,7 @@ pipeline {
                 // Start the container
                 sh """
                 docker run -d --name test \
-                    -p 8000:8000 \
+                    -p 8000:8000 --network host \
                     minhnhk/jojogan-zombie:latest \
                     uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 1
                 """
