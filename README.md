@@ -2,18 +2,13 @@
 
 Project guides you to apply One Shot Stylization with JoJoGan
 
-And we will integrate CI/CD to deploy the product on Google Kubernetes Engine (GKE)
-
 ## System Architecture
 
 ![architecture](./images/architecture.png)
 
 ## Demo
 
-<video width="720" height="360" controls>
-  <source src="./images/onestyle.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+![onestyle](./images/onestyle.gif)
 
 ## Table of Contents
 [1. Introduction](#1-introduction)
