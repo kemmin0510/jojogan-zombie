@@ -4,6 +4,10 @@ Project guides you to apply One Shot Stylization with JoJoGan
 
 And we will integrate CI/CD to deploy the product on Google Kubernetes Engine (GKE)
 
+## System Architecture
+
+![architecture](./images/architecture.png)
+
 ## Table of Contents
 [1. Introduction](#1-introduction)
 
@@ -11,7 +15,7 @@ And we will integrate CI/CD to deploy the product on Google Kubernetes Engine (G
 
 [3. CI/CD Pipeline](#3-cicd-pipeline)
 
-[4. High level architecture](#4-high-level-architecture)
+[4. Deploy serving service](#4-deploy-serving-service)
 
 [5. Results](#5-results)
 
@@ -135,13 +139,11 @@ ansible-playbook create_compute_instance.yaml
 ```
 ansible-playbook deploy_jenkins.yaml -i ../inventory
 ```
-- After Jenkins run successfully, you need to go to the Jenkins browser. In my case, it would be `<EXTERNAL IP>:8081`.
+- After Jenkins run successfully, you need to go to the Jenkins browser `<EXTERNAL IP>:8081`.
 - You need to install the required plugins, such as Docker and Kubernetes. Moreover, you need to create the Github and Docker credential in Jenkins.
 - Create a pipeline with Github, and add a webhook on it.
 
-## 4. High-level architecture
-
-![architecture](./images/architecture.png)
+## 4. Deploy serving service
 
 ### 4.1. Deployment Overview
 #### 4.1.1 Application Deployment:
@@ -166,13 +168,9 @@ ansible-playbook create_gke.yaml
 gcloud container clusters get-credentials <CLUSTER_NAME> --region <REGION>
 ```
 - After that, just run the `make menu`, and choose **8**. It will create necessary namespaces (like model-serving, kube-metrics) and grant permissions to the default user
-- You also need to create a `cloud instance` in Jenkins browser. Copy the **server url** and the **certificate-authority-data** of the GKE to the form for creating cloud in Jenkins
-- You need to validate it has already connected to the GKE cluster or not. In the Jenkins file, we have already add the following code to deploy app in GKE
-```
-helm upgrade --install jojogan-zombie ./helm/jojogan-zombie --namespace model-serving
-```
-- After connecting to GKE, you also need to deploy the Node Exporter and CAdvisor to GKE, just run `make menu` and choose **9**
-- You need to make sure you already have following variables in `./bin/.env` before deploying filebeat to GKE:
+- You also need to create a `cloud instance` in Jenkins browser. Copy the **server url** and the **certificate-authority-data** of the GKE to the form for creating cloud in Jenkins. You can find it in `~/.kube/config`. Please note, we have 3 namespaces including `model-serving`, `kube-logging`, `kube-metrics`, so we need to create 3 cloud connections in Jenkins.
+![k8s-cloud-instance-in-Jenkins](./images/k8s-cloud-ns.png)
+- You need to make sure you already have following variables in [env](./bin/.env) before deploying filebeat to GKE:
 ```
 ELASTIC_USERNAME=""
 ELASTIC_PASSWORD=""
@@ -202,18 +200,17 @@ To ensure comprehensive monitoring and logging, a second Google Compute Engine (
 ```
 ansible-playbook create_gce_elk.yaml
 ```
-- Wait for the compute engine running. After that, you need to create the SSH connection from localhost to it. And copy the External IP to the file [inventory](./infra/ansible/inventory)
+- Wait for the compute engine running. After that, you need to create the SSH connection from localhost to it. And copy the External IP to the file [inventory](./infra/ansible/inventory) and create a ssh connection in the CLI to the compute engine
 - Run the following code to install Docker and Jenkins on the compute engine:
 ```
 ansible-playbook install_docker.yaml -i ../inventory
 ```
 - After that, you need to copy the `elk-docker-compose` and `prom-graf-docker-compose` folders to the second compute engine. Just run `make menu` and choose **6**
 - You need to type the `<EXTERNAL_IP>` of the compute engine in the CLI and enter it
-- Create a ssh connection in the CLI to the compute engine
 - Go to folder `elk-docker-compose` and run `docker compose -f elk-docker-compose.yml up -d`
 - Before starting prometheus, you need to make sure the correct following things:
-   - The [alert rules](./prom-graf-docker-compose/prometheus/config/alert-rules.yml)
-   - The [correct URL for scrapping metrics](./prom-graf-docker-compose/prometheus/config/prometheus.yml)
+   - The [alert rules](./monitoring/cloud/prom-graf-docker-compose/prometheus/config/alert-rules.yml)
+   - The [correct URL for scrapping metrics](./monitoring/cloud/prom-graf-docker-compose/prometheus/config/prometheus.yml)
 - Go to folder `prom-graf-docker-compose` and run `docker compose -f prom-graf-docker-compose.yaml up -d`
 
 This setup ensures end-to-end observability by enabling real-time monitoring, alerting, and log analysis, helping to detect and troubleshoot issues efficiently.
