@@ -10,6 +10,43 @@ Project guides you to apply One Shot Stylization with JoJoGan
 
 ![onestyle](./images/onestyle.gif)
 
+## Project Structure
+```
+├── app/                                <- FastAPI app creation for Zombie Stylization
+├── bin/                                <- Binary Execution files
+│ ├── filebeat/                         <- filebeat configuration
+│ ├── node_exporter/                    <- node exporter configuration
+│ └── .env                              <- environment variables for ElasticSearch
+├── helm/
+│ ├── cadvisor/                         <- Helm charts for cadvisor
+│ ├── jojogan-zombie/                   <- Helm charts for jojogan zombie deployment
+├── infra/                              <- Markdown images
+│ ├── ansible/                          
+│   ├── deploy_elk/                     <- Playbook for deploying google computer engine of elk stack, prometheus and grafana
+│   ├── deploy_jenkins/                 <- Playbook for deploying google computer engine of jenkins
+│ ├── create_gke.yaml                   <- Playbook for deploying google kubernetes engine of app
+│ ├── inventory                         <- Inventory files of ansible
+├── monitoring/                         
+│ ├── cloud
+│   ├── elk-docker-compose              <- Docker compose of elk stack
+│   ├── prom-graf-docker-compose        <- Docker compose of prometheus and grafana
+│ ├── local
+│   ├── mlflow-docker-compose           <- Docker compose of mlflow
+├── notebooks/                          <- Notebooks for Jojogan Zombie training
+├── tests/                              <- Unit test by Pytest and load test by locust
+├── utils/                              <- Libraries for model inference
+├── .gitignore
+├── AUTHORS.rst
+├── Dockerfile                          <- Dockerfile for app
+├── Dockerfile_base                     <- Dockerfile for base image
+├── Jenkinsfile
+├── LICENSE
+├── Makefile
+├── pyproject.toml
+├── README.md
+├── requirements.txt
+├── uv.lock
+```
 ## Table of Contents
 [1. Introduction](#1-introduction)
 
@@ -42,7 +79,7 @@ Project guides you to apply One Shot Stylization with JoJoGan
    - [MySQL](https://www.mysql.com/): backend store db for MLFlow
    - [Minio](https://min.io/): S3 Object Storage for artifacts in MLFlow
    - [Helm](https://helm.sh/): helps you manage Kubernetes applications — Helm Charts help you define, install, and upgrade even the most complex Kubernetes application.
-   - [Jenkins](https://www.jenkins.io/): Automates CI/CD workflows, enabling continuous integration and deployment of ML models and applications.
+   - [Jenkins](https://www.jenkins.io/): Auomates CI/CD workflows, enabling continuous integration and deployment of ML models and applications.
    - [Ansible](https://www.redhat.com/en/ansible-collaborative): plays a crucial role in Infrastructure as Code (IaC) within the project by automating the provisioning, configuration, and management of infrastructure components
    - [Google Kubernetes Engine](https://cloud.google.com/kubernetes-engine?hl=en): Manages containerized applications at scale, ensuring high availability and efficient resource utilization
    - [Google Compute Engine](https://cloud.google.com/products/compute?hl=en): Provides virtual machines for hosting various components, including observability and CI/CD tools
